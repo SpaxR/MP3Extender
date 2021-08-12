@@ -3,30 +3,30 @@ using System.Reflection;
 using System.Windows;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using UI.Controls.FileList;
 
 namespace UI
 {
 	/// <summary>Interaction logic for App.xaml</summary>
 	public partial class App
 	{
+		public new static App Current => (App)Application.Current;
+
 		public IServiceProvider Services { get; }
 
-		public App() => Services = ConfigureServices();
-
-		/// <inheritdoc />
-		protected override void OnStartup(StartupEventArgs e)
+		public App()
 		{
-			Services.GetRequiredService<MainWindow>().Show();
+			Services = ConfigureServices(new ServiceCollection());
 		}
 
-		private static IServiceProvider ConfigureServices()
+		private static IServiceProvider ConfigureServices(IServiceCollection services)
 		{
-			var services = new ServiceCollection();
 			services.AddMediatR(Assembly.GetExecutingAssembly());
+			services.AddSingleton<IMessenger>(StrongReferenceMessenger.Default);
 
-			services.AddSingleton<MainWindow>();
-			services.AddSingleton<MainViewModel>();
-
+			services.AddTransient<MainViewModel>();
+			services.AddTransient<FileListViewModel>();
 
 			return services.BuildServiceProvider();
 		}

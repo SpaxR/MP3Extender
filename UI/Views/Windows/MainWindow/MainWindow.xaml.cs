@@ -1,11 +1,13 @@
-﻿namespace UI
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace UI
 {
 	/// <summary>Interaction logic for MainWindow.xaml</summary>
 	public partial class MainWindow
 	{
-		public MainWindow(MainViewModel model)
+		public MainWindow()
 		{
-			DataContext = model;
+			DataContext = App.Current.Services.GetService<MainViewModel>();
 			InitializeComponent();
 		}
 	}
