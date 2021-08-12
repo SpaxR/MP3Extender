@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
+        xmlns:fileList="clr-namespace:UI.Controls.FileList"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         d:DataContext="{d:DesignInstance local:MainViewModel}">
     <StackPanel>
         <Button Content="{Binding CurrentDirectory}" />
         <Button Command="{Binding PickFolder}">Select Folder</Button>
+        <fileList:FileListControl />
     </StackPanel>
 </Window>

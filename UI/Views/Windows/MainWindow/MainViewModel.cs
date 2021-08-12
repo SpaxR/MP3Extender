@@ -1,3 +1,6 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
@@ -5,9 +8,10 @@ using UI.Commands;
 
 namespace UI
 {
-	public class MainViewModel : ViewModelBase, IRecipient<CurrentDirectoryChangedEvent>
+	public class MainViewModel : ViewModelBase
 	{
-		private string _currentDirectory = "No Directory Selected";
+		private readonly ISender _mediator;
+		private          string  _currentDirectory = "No Directory Selected";
 
 		public string CurrentDirectory
 		{
@@ -19,13 +23,18 @@ namespace UI
 
 		public MainViewModel(ISender mediator, IMessenger messenger) : base(messenger)
 		{
-			PickFolder = new AsyncRelayCommand(token => mediator.Send(new ChangeCurrentDirectoryRequest(), token));
+			_mediator  = mediator;
+			PickFolder = new AsyncRelayCommand(UpdateDirectory);
 		}
 
-		/// <inheritdoc />
-		public void Receive(CurrentDirectoryChangedEvent message)
+		private async Task UpdateDirectory(CancellationToken token)
 		{
-			CurrentDirectory = message.Path;
+			string directory = await _mediator.Send(new ChangeCurrentDirectoryRequest(), token);
+
+			if (directory != null)
+			{
+				CurrentDirectory = directory;
+			}
 		}
 	}
 }

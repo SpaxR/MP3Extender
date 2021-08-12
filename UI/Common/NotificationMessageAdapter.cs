@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -13,10 +12,8 @@ namespace UI
 
 		public NotificationMessageAdapter(IMessenger messenger) => _messenger = messenger;
 
-		/// <inheritdoc />
 		public Task Handle(T notification, CancellationToken cancellationToken)
 		{
-			Console.WriteLine("Message to Notification");
 			_messenger.Send(notification);
 			return Task.CompletedTask;
 		}
@@ -28,15 +25,8 @@ namespace UI
 
 		public MessageNotificationAdapter(IMediator mediator) => _mediator = mediator;
 
-		/// <inheritdoc />
-		public void Receive(T message)
-		{
-			Console.WriteLine("Notification to Message");
-			_mediator.Publish(message);
-		}
+		public void Receive(T message) => _mediator.Publish(message);
 	}
-
-
 
 
 	public class MessageRequestAdapter<TRequest, TResponse> : IRecipient<TRequest> where TRequest : class
@@ -45,10 +35,6 @@ namespace UI
 
 		public MessageRequestAdapter(IMediator mediator) => _mediator = mediator;
 
-		/// <inheritdoc />
-		public void Receive(TRequest message)
-		{
-			Task.Run(() => _mediator.Send(message));
-		}
+		public void Receive(TRequest message) => Task.Run(() => _mediator.Send(message));
 	}
 }
