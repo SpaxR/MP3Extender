@@ -1,12 +1,11 @@
 using MediatR;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using UI.Commands;
 
 namespace UI
 {
-	public class MainViewModel : ObservableRecipient, IRecipient<CurrentDirectoryChangedEvent>
+	public class MainViewModel : ViewModelBase, IRecipient<CurrentDirectoryChangedEvent>
 	{
 		private string _currentDirectory = "No Directory Selected";
 
@@ -16,12 +15,11 @@ namespace UI
 			private set => SetProperty(ref _currentDirectory, value);
 		}
 
-		public IAsyncRelayCommand PickFolder { get; set; }
+		public IAsyncRelayCommand PickFolder { get; }
 
 		public MainViewModel(ISender mediator, IMessenger messenger) : base(messenger)
 		{
 			PickFolder = new AsyncRelayCommand(token => mediator.Send(new ChangeCurrentDirectoryRequest(), token));
-			IsActive   = true; // TODO: Figure out why IsActive is not automatically true
 		}
 
 		/// <inheritdoc />
