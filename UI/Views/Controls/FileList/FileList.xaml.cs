@@ -2,9 +2,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace UI.Controls.FileList
 {
-	public partial class FileListControl
+	public partial class FileList
 	{
-		public FileListControl()
+		public FileList()
 		{
 			DataContext = App.Current.Services.GetService<FileListViewModel>();
 			InitializeComponent();

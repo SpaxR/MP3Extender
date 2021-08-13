@@ -11,6 +11,6 @@
     <StackPanel>
         <Button Content="{Binding CurrentDirectory}" />
         <Button Command="{Binding PickFolder}">Select Folder</Button>
-        <fileList:FileListControl />
+        <fileList:FileList />
     </StackPanel>
 </Window>

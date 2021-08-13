@@ -4,19 +4,16 @@
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net5.0-windows</TargetFramework>
 		<UseWPF>true</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
 		<DisableWinExeOutputInference>true</DisableWinExeOutputInference>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="MediatR" Version="9.0.0" />
-	  <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
-	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
-	  <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
-	  <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Views\Windows" />
+		<PackageReference Include="MediatR" Version="9.0.0" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>
