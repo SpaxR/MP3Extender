@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
 
 namespace UI.Dialogs.FolderBrowser
@@ -11,12 +12,13 @@ namespace UI.Dialogs.FolderBrowser
 
 	public class FolderBrowserDialog : IFolderBrowserDialog
 	{
-		private readonly System.Windows.Forms.FolderBrowserDialog _dialog = new();
+		private readonly System.Windows.Forms.FolderBrowserDialog _instance = new();
 
 		/// <inheritdoc />
-		public string SelectedPath => _dialog.SelectedPath;
+		public string SelectedPath => _instance.SelectedPath;
 
 		/// <inheritdoc />
-		public bool? ShowDialog() => _dialog.ShowDialog() == DialogResult.OK;
+		[ExcludeFromCodeCoverage]
+		public bool? ShowDialog() => _instance.ShowDialog() == DialogResult.OK;
 	}
 }

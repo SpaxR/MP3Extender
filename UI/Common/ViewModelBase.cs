@@ -4,10 +4,10 @@ using Microsoft.Toolkit.Mvvm.Messaging;
 
 namespace UI
 {
-	public class ViewModelBase : ObservableRecipient, IDisposable
+	public abstract class ViewModelBase : ObservableRecipient, IDisposable
 	{
 		/// <inheritdoc />
-		public ViewModelBase(IMessenger messenger) : base(messenger)
+		protected ViewModelBase(IMessenger messenger) : base(messenger)
 		{
 			IsActive = true; // TODO: Figure out why IsActive is not automatically true
 		}
