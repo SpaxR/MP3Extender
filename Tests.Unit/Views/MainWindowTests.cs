@@ -6,7 +6,7 @@ namespace Tests.Unit.Views
 	public class MainWindowTests : TestBase<MainWindow>, IClassFixture<ApplicationFixture>
 	{
 		/// <inheritdoc />
-		protected override MainWindow CreateSUT() => new MainWindow();
+		protected override MainWindow CreateSUT() => new();
 
 		[UIFact]
 		public void GivenNewInstance_WhenNothingChanged_ThenDataContextIsMainViewModel()
