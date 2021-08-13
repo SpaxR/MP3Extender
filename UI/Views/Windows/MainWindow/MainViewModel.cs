@@ -10,7 +10,8 @@ namespace UI
 	public class MainViewModel : ViewModelBase
 	{
 		private readonly ISender _mediator;
-		private          string  _currentDirectory = "No Directory Selected";
+
+		private string _currentDirectory = "No Directory Selected";
 
 		public string CurrentDirectory
 		{
@@ -19,7 +20,7 @@ namespace UI
 		}
 
 		public IAsyncRelayCommand PickFolder { get; }
-
+		
 		public MainViewModel(ISender mediator, IMessenger messenger) : base(messenger)
 		{
 			_mediator  = mediator;
@@ -28,12 +29,7 @@ namespace UI
 
 		private async Task UpdateDirectory(CancellationToken token)
 		{
-			string directory = await _mediator.Send(new ChangeCurrentDirectoryRequest(), token);
-
-			if (directory != null)
-			{
-				CurrentDirectory = directory;
-			}
+			CurrentDirectory = await _mediator.Send(new ChangeCurrentDirectoryRequest(), token);
 		}
 	}
 }
