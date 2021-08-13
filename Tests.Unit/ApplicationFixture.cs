@@ -5,14 +5,14 @@ namespace Tests.Unit
 {
 	public sealed class ApplicationFixture : IDisposable
 	{
-		private readonly App _instance;
+		public App Instance { get; }
 
 		public ApplicationFixture()
 		{
-			_instance = new App();
+			Instance = new App();
 		}
 
 		/// <inheritdoc />
-		public void Dispose() => _instance.Shutdown();
+		public void Dispose() => Instance.Shutdown();
 	}
 }

@@ -7,17 +7,16 @@ namespace UI.Controls.FileList
 {
 	public class FileListViewModel : ViewModelBase, IRecipient<CurrentDirectoryChangedEvent>
 	{
+		public ObservableCollection<string> Files { get; } = new();
+
 		public FileListViewModel(IMessenger messenger) : base(messenger) { }
 
-		public ObservableCollection<string> Files { get; } = new();
-		
 		/// <inheritdoc />
 		public void Receive(CurrentDirectoryChangedEvent message)
 		{
-			string[] files = Directory.GetFiles(message.Path);
 			Files.Clear();
 
-			foreach (string file in files)
+			foreach (string file in Directory.GetFiles(message.Path))
 			{
 				Files.Add(file);
 			}
