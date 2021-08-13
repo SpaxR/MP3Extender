@@ -12,6 +12,9 @@ namespace UI
 		public NotificationMessageAdapter(IMessenger messenger) => _messenger = messenger;
 
 		public Task Handle(T notification, CancellationToken token)
-			=> Task.Run(() => _messenger.Send(notification), token);
+		{
+			_messenger.Send(notification);
+			return Task.CompletedTask;
+		}
 	}
 }
