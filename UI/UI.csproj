@@ -16,7 +16,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Views\Controls" />
 	  <Folder Include="Views\Windows" />
 	</ItemGroup>
 

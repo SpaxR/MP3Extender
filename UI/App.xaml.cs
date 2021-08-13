@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using UI.Controls.FileList;
+using UI.Dialogs;
 
 namespace UI
 {
@@ -27,6 +28,7 @@ namespace UI
 
 			services.AddTransient<MainViewModel>();
 			services.AddTransient<FileListViewModel>();
+			services.AddTransient<IDialogFactory, DialogFactory>();
 
 			return services.BuildServiceProvider();
 		}
