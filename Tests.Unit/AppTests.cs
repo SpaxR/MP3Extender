@@ -6,7 +6,7 @@ namespace Tests.Unit
 	public class AppTests : TestBase<App>
 	{
 		/// <inheritdoc />
-		protected override App CreateSUT() => new();
+		protected override App CreateSUT() => App.Current ?? new();
 
 		[Fact]
 		public void GivenCreated_WhenCreated_ThenHasServices()

@@ -19,9 +19,10 @@ namespace Tests.Unit
 		}
 
 
-		protected Mock<ILogger<T>> LoggerMock    = new();
-		protected Mock<IMediator>  MediatorMock  = new();
-		protected Mock<IMessenger> MessengerMock = new();
+		protected readonly Mock<ILogger<T>> LoggerMock   = new();
+		protected readonly Mock<IMediator>  MediatorMock = new();
+
+		protected readonly IMessenger Messenger = new StrongReferenceMessenger();
 
 		protected abstract T CreateSUT();
 	}

@@ -10,8 +10,8 @@ namespace Tests.Unit.Commands
 {
 	public class ChangeDirectoryCommandTests : TestBase<ChangeCurrentDirectoryHandler>
 	{
-		private static readonly ChangeCurrentDirectoryRequest AnyRequest = It.IsAny<ChangeCurrentDirectoryRequest>();
-		private static readonly CancellationToken             AnyToken   = It.IsAny<CancellationToken>();
+		private readonly ChangeCurrentDirectoryRequest _request = new();
+		private readonly CancellationToken             _token   = CancellationToken.None;
 
 		private readonly Mock<IDialogFactory> _dialogFactoryMock = new();
 
@@ -47,7 +47,7 @@ namespace Tests.Unit.Commands
 		{
 			var dialog = SetupFolderBrowser(null);
 
-			await SUT.Handle(AnyRequest, AnyToken);
+			await SUT.Handle(_request, _token);
 
 			dialog.Verify(d => d.ShowDialog());
 		}
@@ -57,7 +57,7 @@ namespace Tests.Unit.Commands
 		{
 			SetupFolderBrowser("SOME PATH");
 
-			string result = await SUT.Handle(AnyRequest, AnyToken);
+			string result = await SUT.Handle(_request, _token);
 
 			Assert.Equal("SOME PATH", result);
 		}
@@ -67,7 +67,7 @@ namespace Tests.Unit.Commands
 		{
 			SetupFolderBrowser(null);
 
-			string result = await SUT.Handle(AnyRequest, AnyToken);
+			string result = await SUT.Handle(_request, _token);
 
 			Assert.Null(result);
 		}
@@ -77,9 +77,9 @@ namespace Tests.Unit.Commands
 		{
 			SetupFolderBrowser("SOME PATH");
 
-			await SUT.Handle(AnyRequest, AnyToken);
+			await SUT.Handle(_request, _token);
 
-			MediatorMock.Verify(m => m.Publish(It.IsAny<CurrentDirectoryChangedEvent>(), AnyToken));
+			MediatorMock.Verify(m => m.Publish(It.IsAny<CurrentDirectoryChangedEvent>(), _token));
 		}
 
 		[Fact]
@@ -88,10 +88,10 @@ namespace Tests.Unit.Commands
 			SetupFolderBrowser("SOME PATH");
 			CurrentDirectoryChangedEvent publishedEvent = null;
 
-			MediatorMock.Setup(med => med.Publish(It.IsAny<CurrentDirectoryChangedEvent>(), AnyToken))
+			MediatorMock.Setup(med => med.Publish(It.IsAny<CurrentDirectoryChangedEvent>(), _token))
 						.Callback<CurrentDirectoryChangedEvent, CancellationToken>((e, _) => publishedEvent = e);
 
-			await SUT.Handle(AnyRequest, AnyToken);
+			await SUT.Handle(_request, _token);
 
 			Assert.Equal("SOME PATH", publishedEvent.Path);
 		}
