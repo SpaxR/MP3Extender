@@ -9,8 +9,8 @@
         Title="MainWindow" Height="450" Width="800"
         d:DataContext="{d:DesignInstance local:MainViewModel}">
     <StackPanel>
-        <Button Content="{Binding CurrentDirectory}" />
+        <TextBlock Text="{Binding Files.CurrentDirectory}" />
         <Button Command="{Binding PickFolder}">Select Folder</Button>
-        <fileList:FileListControl />
+        <fileList:FileList DataContext="{Binding Files}" />
     </StackPanel>
 </Window>
