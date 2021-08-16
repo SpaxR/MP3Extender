@@ -10,30 +10,18 @@ namespace Tests.Unit.ViewModels
 	{
 		protected override MainViewModel CreateSUT() => new(MediatorMock.Object, Messenger);
 
-
 		[Fact]
-		public void GivenViewModel_WhenUnchanged_ThenCurrentDirectoryIsDefaultText()
+		public void GivenNewInstance_WhenUnchanged_ThenFilesIsNotNull()
 		{
-			Assert.NotEmpty(SUT.CurrentDirectory);
+			Assert.NotNull(SUT.Files);
 		}
 
 		[Fact]
-		public void GivenViewModel_WhenExecutePickFolder_SendsChangeDirectoryRequest()
+		public void GivenNewInstance_WhenPickFolderExecuting_ThenSendsChangeDirectoryRequest()
 		{
 			SUT.PickFolder.Execute(null);
 
 			MediatorMock.Verify(m => m.Send(It.IsAny<ChangeCurrentDirectoryRequest>(), It.IsAny<CancellationToken>()));
-		}
-
-		[Fact]
-		public void GivenViewModel_WhenExecutePickFolder_ThenUpdatesCurrentDirectory()
-		{
-			MediatorMock.Setup(m => m.Send(It.IsAny<ChangeCurrentDirectoryRequest>(), It.IsAny<CancellationToken>()))
-						.ReturnsAsync("NEW DIRECTORY");
-
-			SUT.PickFolder.Execute(null);
-
-			Assert.Equal("NEW DIRECTORY", SUT.CurrentDirectory);
 		}
 	}
 }

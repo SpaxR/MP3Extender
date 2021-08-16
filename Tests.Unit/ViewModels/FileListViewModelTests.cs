@@ -30,6 +30,16 @@ namespace Tests.Unit.ViewModels
 		}
 
 		[Fact]
+		public void GivenDirectoryChangedEvent_WhenReceived_ThenPathIsCurrentDirectory()
+		{
+			var request = new CurrentDirectoryChangedEvent { Path = _tempDir };
+
+			SUT.Receive(request);
+
+			Assert.Equal(_tempDir, SUT.CurrentDirectory);
+		}
+
+		[Fact]
 		public void GivenDirectoryChangedEvent_WhenDirectoryContainsFiles_ThenFilesContainsFilenames()
 		{
 			string expectedFile = CreateTempFile();
@@ -51,6 +61,26 @@ namespace Tests.Unit.ViewModels
 
 			Assert.Contains(expectedFile, SUT.Files);
 			Assert.Single(SUT.Files);
+		}
+
+		[Fact]
+		public void GivenDirectoryChangedEvent_WhenDirectoryDoesNotExist_ThenCurrentDirectoryIsErrorText()
+		{
+			var request = new CurrentDirectoryChangedEvent { Path = "INVALID" };
+
+			SUT.Receive(request);
+
+			Assert.Equal("Directory not Found", SUT.CurrentDirectory);
+		}
+
+		[Fact]
+		public void GivenDirectoryChangedEvent_WhenDirectoryDoesNotExist_ThenFilesIsEmpty()
+		{
+			var request = new CurrentDirectoryChangedEvent { Path = "INVALID" };
+
+			SUT.Receive(request);
+
+			Assert.Empty(SUT.Files);
 		}
 	}
 }

@@ -1,35 +1,28 @@
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using UI.Commands;
+using UI.Controls.FileList;
 
 namespace UI
 {
-	public class MainViewModel : ViewModelBase
+	public interface IMainViewModel
 	{
-		private readonly ISender _mediator;
-
-		private string _currentDirectory = "No Directory Selected";
-
-		public string CurrentDirectory
-		{
-			get => _currentDirectory;
-			private set => SetProperty(ref _currentDirectory, value);
-		}
-
 		public IAsyncRelayCommand PickFolder { get; }
-		
+		public IFileListViewModel  Files      { get; }
+	}
+
+	public class MainViewModel : ViewModelBase, IMainViewModel
+	{
+		public IAsyncRelayCommand PickFolder { get; }
+
+		/// <inheritdoc />
+		public IFileListViewModel Files { get; }
+
 		public MainViewModel(ISender mediator, IMessenger messenger) : base(messenger)
 		{
-			_mediator  = mediator;
-			PickFolder = new AsyncRelayCommand(UpdateDirectory);
-		}
-
-		private async Task UpdateDirectory(CancellationToken token)
-		{
-			CurrentDirectory = await _mediator.Send(new ChangeCurrentDirectoryRequest(), token);
+			Files      = new FileListViewModel(messenger);
+			PickFolder = new AsyncRelayCommand(token => mediator.Send(new ChangeCurrentDirectoryRequest(), token));
 		}
 	}
 }

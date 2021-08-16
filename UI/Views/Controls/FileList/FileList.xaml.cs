@@ -1,13 +1,10 @@
-using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace UI.Controls.FileList
 {
 	public partial class FileList
 	{
-		public FileList()
-		{
-			DataContext = App.Current.Services.GetService<FileListViewModel>();
-			InitializeComponent();
-		}
+		[ExcludeFromCodeCoverage]
+		public FileList() => InitializeComponent();
 	}
 }
