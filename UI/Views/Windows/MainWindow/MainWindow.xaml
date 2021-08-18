@@ -1,18 +1,36 @@
-﻿<Window x:Class="UI.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:UI"
-        xmlns:fileList="clr-namespace:UI.Controls.FileList"
-        xmlns:controls="clr-namespace:UI.Controls"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        d:DataContext="{d:DesignInstance local:MainViewModel}">
-    <DockPanel>
-        <controls:ApplicationMenu DockPanel.Dock="Top" />
-        <controls:DirectorySelector DockPanel.Dock="Top" />
-        <controls:DirectoryTree DockPanel.Dock="Left" />
-        <fileList:FileList DataContext="{Binding Files}" />
-    </DockPanel>
-</Window>
+﻿<adonis:AdonisWindow x:Class="UI.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:local="clr-namespace:UI"
+                     xmlns:fileList="clr-namespace:UI.Controls.FileList"
+                     xmlns:controls="clr-namespace:UI.Controls"
+                     xmlns:adonis="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+                     mc:Ignorable="d"
+                     Title="MainWindow" Height="450" Width="800"
+                     d:DataContext="{d:DesignInstance local:MainViewModel}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <controls:ApplicationMenu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" />
+
+        <controls:DirectorySelector Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
+
+        <controls:DirectoryTree Grid.Row="2" Grid.Column="0" />
+        <GridSplitter Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      ShowsPreview="True" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext" />
+        <fileList:FileList Grid.Row="2" Grid.Column="2" DataContext="{Binding Files}" />
+
+    </Grid>
+</adonis:AdonisWindow>
