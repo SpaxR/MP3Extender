@@ -4,9 +4,11 @@ using System.Reflection;
 using System.Windows;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using UI.Controls.FileList;
 using UI.Dialogs;
+using UI.Localization;
 
 namespace UI
 {
@@ -14,19 +16,16 @@ namespace UI
 	[ExcludeFromCodeCoverage]
 	public partial class App
 	{
-		public new static App Current => (App)Application.Current;
-
-		public IServiceProvider Services { get; }
-
 		public App()
 		{
-			Services = ConfigureServices(new ServiceCollection());
+			var services = ConfigureServices(new ServiceCollection());
+			Ioc.Default.ConfigureServices(services);
 		}
 
 		/// <inheritdoc />
 		protected override void OnStartup(StartupEventArgs e)
 		{
-			new MainWindow { DataContext = Services.GetRequiredService<IMainViewModel>() }
+			new MainWindow { DataContext = Ioc.Default.GetRequiredService<IMainViewModel>() }
 				.Show();
 		}
 
@@ -34,6 +33,7 @@ namespace UI
 		{
 			services.AddMediatR(Assembly.GetExecutingAssembly());
 			services.AddSingleton<IMessenger>(StrongReferenceMessenger.Default);
+			services.AddSingleton<ILocalizationProvider>(new LocalizationProvider(Language.ResourceManager));
 
 			services.AddTransient<IMainViewModel, MainViewModel>();
 			services.AddTransient<IFileListViewModel, FileListViewModel>();

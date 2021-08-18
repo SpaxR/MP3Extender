@@ -9,7 +9,7 @@ namespace UI
 	public interface IMainViewModel
 	{
 		public IAsyncRelayCommand PickFolder { get; }
-		public IFileListViewModel  Files      { get; }
+		public IFileListViewModel Files      { get; }
 	}
 
 	public class MainViewModel : ViewModelBase, IMainViewModel
