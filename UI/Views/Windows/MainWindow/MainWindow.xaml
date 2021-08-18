@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
         xmlns:fileList="clr-namespace:UI.Controls.FileList"
+        xmlns:controls="clr-namespace:UI.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         d:DataContext="{d:DesignInstance local:MainViewModel}">
-    <StackPanel>
-        <TextBlock Text="{Binding Files.CurrentDirectory}" />
-        <Button Command="{Binding PickFolder}">Select Folder</Button>
+    <DockPanel>
+        <controls:ApplicationMenu DockPanel.Dock="Top" />
+        <controls:DirectorySelector DockPanel.Dock="Top" />
+        <controls:DirectoryTree DockPanel.Dock="Left" />
         <fileList:FileList DataContext="{Binding Files}" />
-    </StackPanel>
+    </DockPanel>
 </Window>
