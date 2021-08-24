@@ -7,8 +7,8 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <TreeView>
-        <TreeViewItem Header="C:">
-            <TreeViewItem Header="SubDir">
+        <TreeViewItem Header="Selected Main-Directory">
+            <TreeViewItem Header="Some Directory">
                 <TreeViewItem Header="Directory 1" />
                 <TreeViewItem Header="Directory 2" />
                 <TreeViewItem Header="Directory 3" />
@@ -16,5 +16,6 @@
                 <TreeViewItem Header="Directory 5" />
             </TreeViewItem>
         </TreeViewItem>
+        <TreeViewItem Header="Some other Directory" />
     </TreeView>
 </UserControl>

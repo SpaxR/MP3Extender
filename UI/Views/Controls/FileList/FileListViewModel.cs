@@ -23,7 +23,15 @@ namespace UI.Controls.FileList
 
 		public ObservableCollection<string> Files { get; } = new();
 
-		public FileListViewModel(IMessenger messenger) : base(messenger) { }
+		public FileListViewModel(IMessenger messenger) : base(messenger)
+		{
+			Files = new ObservableCollection<string>
+			{
+				"TestFile 1",
+				"TestFile 2",
+				"TestFile 3",
+			};
+		}
 
 		/// <inheritdoc />
 		public void Receive(CurrentDirectoryChangedEvent message)

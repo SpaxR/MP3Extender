@@ -7,30 +7,35 @@
                      xmlns:fileList="clr-namespace:UI.Controls.FileList"
                      xmlns:controls="clr-namespace:UI.Controls"
                      xmlns:adonis="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+                     xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
                      mc:Ignorable="d"
                      Title="MainWindow" Height="450" Width="800"
                      d:DataContext="{d:DesignInstance local:MainViewModel}">
+    <adonis:AdonisWindow.TitleBarContent>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="{StaticResource FolderOpenedIcon}"
+                    Style="{DynamicResource {x:Static adonisUi:Styles.WindowButton}}" />
+
+            <Button Content="{StaticResource ColorPaletteIcon}"
+                    Style="{DynamicResource {x:Static adonisUi:Styles.WindowButton}}" />
+        </StackPanel>
+    </adonis:AdonisWindow.TitleBarContent>
+
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <controls:ApplicationMenu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" />
+        <controls:DirectoryTree Grid.Column="0" />
+        
+        <GridSplitter Grid.Column="1"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ShowsPreview="True"
+                      ResizeDirection="Columns" ResizeBehavior="PreviousAndNext" />
 
-        <controls:DirectorySelector Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
-
-        <controls:DirectoryTree Grid.Row="2" Grid.Column="0" />
-        <GridSplitter Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                      ShowsPreview="True" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext" />
-        <fileList:FileList Grid.Row="2" Grid.Column="2" DataContext="{Binding Files}" />
+        <fileList:FileList Grid.Column="2"
+                           DataContext="{Binding Files}" />
 
     </Grid>
 </adonis:AdonisWindow>
