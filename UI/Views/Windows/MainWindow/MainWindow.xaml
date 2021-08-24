@@ -29,13 +29,12 @@
         </Grid.ColumnDefinitions>
 
         <controls:DirectoryTree Grid.Column="0" />
-        
+
         <GridSplitter Grid.Column="1"
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ShowsPreview="True"
                       ResizeDirection="Columns" ResizeBehavior="PreviousAndNext" />
 
-        <fileList:FileList Grid.Column="2"
-                           DataContext="{Binding Files}" />
+        <fileList:FileList Grid.Column="2" DataContext="{Binding Files}" />
 
     </Grid>
 </adonis:AdonisWindow>

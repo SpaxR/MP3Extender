@@ -1,12 +1,11 @@
-using System.Windows.Controls;
+using System.Diagnostics.CodeAnalysis;
 
 namespace UI.Controls
 {
-	public partial class DirectoryTree : UserControl
+	/// <summary>Interaction logic for DirectoryTree.xaml</summary>
+	public partial class DirectoryTree
 	{
-		public DirectoryTree()
-		{
-			InitializeComponent();
-		}
+		[ExcludeFromCodeCoverage]
+		public DirectoryTree() => InitializeComponent();
 	}
 }
