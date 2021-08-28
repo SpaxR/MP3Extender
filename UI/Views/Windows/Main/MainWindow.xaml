@@ -13,28 +13,36 @@
                      d:DataContext="{d:DesignInstance local:MainViewModel}">
     <adonis:AdonisWindow.TitleBarContent>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="{StaticResource FolderOpenedIcon}"
+            <!-- Settings -->
+            <Button Content="{StaticResource SettingsIcon}"
                     Style="{DynamicResource {x:Static adonisUi:Styles.WindowButton}}" />
-
-            <Button Content="{StaticResource ColorPaletteIcon}"
+            <!-- Help -->
+            <Button Content="{StaticResource QuestionIcon}"
                     Style="{DynamicResource {x:Static adonisUi:Styles.WindowButton}}" />
         </StackPanel>
     </adonis:AdonisWindow.TitleBarContent>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <DockPanel>
+        <!-- Toolbar -->
+        <controls:MainWindowToolbar DockPanel.Dock="Top" />
 
-        <controls:DirectoryTree Grid.Column="0" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="100" />
+                <ColumnDefinition Width="2" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-        <GridSplitter Grid.Column="1"
-                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ShowsPreview="True"
-                      ResizeDirection="Columns" ResizeBehavior="PreviousAndNext" />
+            <!-- Directory-Tree -->
+            <controls:DirectoryTree Grid.Column="0" />
 
-        <fileList:FileList Grid.Column="2" DataContext="{Binding Files}" />
+            <!-- Splitter -->
+            <GridSplitter Grid.Column="1" Padding="-3 0"
+                          Background="{DynamicResource {x:Static adonisUi:Brushes.Layer1HighlightBorderBrush}}" />
 
-    </Grid>
+            <!-- Files -->
+            <fileList:FileList Grid.Column="2" DataContext="{Binding Files}" />
+
+        </Grid>
+    </DockPanel>
 </adonis:AdonisWindow>
