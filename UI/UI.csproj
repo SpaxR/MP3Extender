@@ -9,6 +9,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AdonisUI.ClassicTheme.NET5" Version="1.17.1" />
+		<PackageReference Include="AdonisUI.NET5" Version="1.17.1" />
 		<PackageReference Include="MediatR" Version="9.0.0" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
@@ -22,6 +24,10 @@
 
 	<ItemGroup>
 	  <EmbeddedResource Update="Localization\Language.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Language.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Localization\Language.resx">
 	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Language.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
