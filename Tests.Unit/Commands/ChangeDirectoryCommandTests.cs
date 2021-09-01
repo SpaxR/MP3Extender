@@ -1,5 +1,4 @@
 using Microsoft.Toolkit.Mvvm.Messaging;
-using Moq;
 using NSubstitute;
 using UI.Commands;
 using UI.Dialogs;
@@ -10,30 +9,28 @@ namespace Tests.Unit.Commands
 {
 	public class ChangeDirectoryCommandTests : TestBase<ChangeCurrentDirectoryHandler>
 	{
-		private readonly IMessenger           _messenger          = Substitute.For<IMessenger>();
-		private readonly Mock<IDialogFactory> _dialogFactoryMock = new();
+		private readonly IMessenger     _messenger         = Substitute.For<IMessenger>();
+		private readonly IDialogFactory _dialogFactoryMock = Substitute.For<IDialogFactory>();
 
 		/// <inheritdoc />
 		protected override ChangeCurrentDirectoryHandler CreateSUT()
-			=> new(_messenger, _dialogFactoryMock.Object);
+			=> new(_messenger, _dialogFactoryMock);
 
-		private Mock<IFolderBrowserDialog> SetupFolderBrowser(string path)
+		private IFolderBrowserDialog SetupFolderBrowser(string path)
 		{
-			var dialog = new Mock<IFolderBrowserDialog>();
+			var dialog = Substitute.For<IFolderBrowserDialog>();
 
 			if (path != null)
 			{
-				dialog.Setup(d => d.ShowDialog()).Returns(true);
-				dialog.Setup(d => d.SelectedPath).Returns(path);
+				dialog.ShowDialog().Returns(true);
+				dialog.SelectedPath.Returns(path);
 			}
 			else
 			{
-				dialog.Setup(d => d.ShowDialog()).Returns(false);
+				dialog.ShowDialog().Returns(false);
 			}
 
-			_dialogFactoryMock
-				.Setup(fac => fac.CreateFolderBrowserDialog())
-				.Returns(dialog.Object);
+			_dialogFactoryMock.CreateFolderBrowserDialog().Returns(dialog);
 
 			return dialog;
 		}
@@ -47,7 +44,7 @@ namespace Tests.Unit.Commands
 
 			SUT.Receive(new ChangeCurrentDirectoryRequest());
 
-			dialog.Verify(d => d.ShowDialog());
+			dialog.Received(1).ShowDialog();
 		}
 
 

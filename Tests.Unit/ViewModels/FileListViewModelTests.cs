@@ -18,7 +18,7 @@ namespace Tests.Unit.ViewModels
 
 
 		/// <inheritdoc />
-		protected override FileListViewModel CreateSUT() => new(MessengerMock.Object);
+		protected override FileListViewModel CreateSUT() => new(MessengerMock);
 
 		public void Dispose() => Directory.Delete(_tempDir, true);
 
