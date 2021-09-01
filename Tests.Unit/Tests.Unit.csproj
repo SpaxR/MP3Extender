@@ -24,7 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\UI\UI.csproj" />
+	  <ProjectReference Include="..\MP3Extender.WPF\MP3Extender.WPF.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

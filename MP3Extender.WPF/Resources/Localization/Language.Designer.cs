@@ -39,7 +39,7 @@ namespace UI.Localization {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UI.Localization.Language", typeof(Language).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MP3Extender.WPF.Localization.Language", typeof(Language).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

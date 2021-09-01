@@ -6,6 +6,7 @@
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 		<DisableWinExeOutputInference>true</DisableWinExeOutputInference>
+		<RootNamespace>UI</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -39,6 +40,10 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>strings.resx</DependentUpon>
 	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\MP3Extender.Application\MP3Extender.Application.csproj" />
 	</ItemGroup>
 
 </Project>
