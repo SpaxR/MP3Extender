@@ -14,7 +14,7 @@
     <adonis:AdonisWindow.TitleBarContent>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <!-- Settings -->
-            <Button Content="{StaticResource SettingsIcon}"
+            <Button Content="{StaticResource SettingsIcon}" Command="{Binding OpenSettingsWindow}"
                     Style="{DynamicResource {x:Static adonisUi:Styles.WindowButton}}" />
             <!-- Help -->
             <Button Content="{StaticResource QuestionIcon}"

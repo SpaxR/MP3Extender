@@ -1,37 +1,34 @@
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using UI.Dialogs;
 
 namespace UI.Commands
 {
-	public class ChangeCurrentDirectoryRequest : IRequest<string> { }
+	public class ChangeCurrentDirectoryRequest { }
 
-	public class CurrentDirectoryChangedEvent : INotification
+	public class CurrentDirectoryChangedEvent
 	{
 		public string Path { get; set; }
 	}
 
-	public class ChangeCurrentDirectoryHandler : IRequestHandler<ChangeCurrentDirectoryRequest, string>
+	public class ChangeCurrentDirectoryHandler : IRecipient<ChangeCurrentDirectoryRequest>
 	{
-		private readonly IMediator      _mediator;
+		private readonly IMessenger     _messenger;
 		private readonly IDialogFactory _dialogs;
 
-		public ChangeCurrentDirectoryHandler(IMediator mediator, IDialogFactory dialogs)
+		public ChangeCurrentDirectoryHandler(IMessenger messenger, IDialogFactory dialogs)
 		{
-			_mediator = mediator;
-			_dialogs  = dialogs;
+			_messenger = messenger;
+			_dialogs   = dialogs;
 		}
 
 		/// <inheritdoc />
-		public async Task<string> Handle(ChangeCurrentDirectoryRequest request, CancellationToken token)
+		public void Receive(ChangeCurrentDirectoryRequest message)
 		{
 			var dialog = _dialogs.CreateFolderBrowserDialog();
 
 			dialog.ShowDialog();
-			
-			await _mediator.Publish(new CurrentDirectoryChangedEvent { Path = dialog.SelectedPath }, token);
-			return dialog.SelectedPath;
+
+			_messenger.Send(new CurrentDirectoryChangedEvent { Path = dialog.SelectedPath });
 		}
 	}
 }

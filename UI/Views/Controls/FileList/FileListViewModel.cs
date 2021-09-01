@@ -5,13 +5,7 @@ using UI.Commands;
 
 namespace UI.Controls.FileList
 {
-	public interface IFileListViewModel : IRecipient<CurrentDirectoryChangedEvent>
-	{
-		public string                       CurrentDirectory { get; }
-		public ObservableCollection<string> Files            { get; }
-	}
-
-	public class FileListViewModel : ViewModelBase, IFileListViewModel
+	public class FileListViewModel : ViewModelBase, IRecipient<CurrentDirectoryChangedEvent>
 	{
 		private string _currentDirectory;
 
