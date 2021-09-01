@@ -1,5 +1,5 @@
-using System.Threading;
-using Moq;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using NSubstitute;
 using UI;
 using UI.Commands;
 using Xunit;
@@ -8,20 +8,24 @@ namespace Tests.Unit.ViewModels
 {
 	public class MainViewModelTests : TestBase<MainViewModel>
 	{
-		protected override MainViewModel CreateSUT() => new(MediatorMock.Object, Messenger);
+		private readonly IMessenger _messengerMock = Substitute.For<IMessenger>();
+		
+		protected override MainViewModel CreateSUT() => new(_messengerMock);
 
 		[Fact]
-		public void GivenNewInstance_WhenUnchanged_ThenFilesIsNotNull()
+		public void GivenMainViewModel_WhenNotLoaded_ThenFilesIsNotNull()
 		{
 			Assert.NotNull(SUT.Files);
 		}
-
+		
+		
 		[Fact]
-		public void GivenNewInstance_WhenPickFolderExecuting_ThenSendsChangeDirectoryRequest()
+		public void GivenMainViewModel_WhenOpenSettingsCommandExecuted_ThenSendsOpenSettingsWindowRequest()
 		{
-			SUT.PickFolder.Execute(null);
+			SUT.OpenSettingsWindow.Execute(null);
 
-			MediatorMock.Verify(m => m.Send(It.IsAny<ChangeCurrentDirectoryRequest>(), It.IsAny<CancellationToken>()));
+			_messengerMock.Received().Send(Arg.Any<OpenSettingsWindowRequest>());
+
 		}
 	}
 }

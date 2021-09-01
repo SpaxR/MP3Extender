@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using Moq;
@@ -19,11 +18,11 @@ namespace Tests.Unit
 		}
 
 
-		protected readonly Mock<ILogger<T>> LoggerMock   = new();
-		protected readonly Mock<IMediator>  MediatorMock = new();
+		protected readonly Mock<ILogger<T>> LoggerMock = new();
 
-		protected readonly IMessenger Messenger = new StrongReferenceMessenger();
+		protected readonly Mock<IMessenger> MessengerMock = new();
 
 		protected abstract T CreateSUT();
+
 	}
 }

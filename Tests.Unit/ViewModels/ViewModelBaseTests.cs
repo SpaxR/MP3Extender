@@ -12,7 +12,7 @@ namespace Tests.Unit.ViewModels
 		}
 
 		/// <inheritdoc />
-		protected override ViewModelBase CreateSUT() => new DerivedViewModelBase(Messenger);
+		protected override ViewModelBase CreateSUT() => new DerivedViewModelBase(MessengerMock.Object);
 
 		[Fact]
 		public void GivenViewModel_WhenUnchanged_ThenIsActiveIsTrue()
