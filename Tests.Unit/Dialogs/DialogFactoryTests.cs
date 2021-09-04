@@ -1,4 +1,4 @@
-using UI.Dialogs;
+using MP3Extender.WPF;
 using Xunit;
 
 namespace Tests.Unit.Dialogs
@@ -9,7 +9,7 @@ namespace Tests.Unit.Dialogs
 		protected override DialogFactory CreateSUT() => new();
 
 
-		[Fact]
+		[UIFact]
 		public void GivenInstance_WhenCreateFolderBrowserDialog_ThenReturnsNewFolderBrowserDialog()
 		{
 			Assert.NotNull(SUT.CreateFolderBrowserDialog());

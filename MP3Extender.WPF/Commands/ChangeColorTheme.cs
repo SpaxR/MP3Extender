@@ -1,19 +1,38 @@
 using System;
-using System.Windows;
-using System.Windows.Input;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using System.Threading.Tasks;
 using AdonisUI;
+using MediatR;
+using MP3Extender.Application;
 
-namespace UI.Commands
+namespace MP3Extender.WPF.Commands
 {
-	public class ChangeColorTheme : ICommand
+	public class ChangeColorThemeRequest : IRequest
 	{
-		/// <inheritdoc />
-		public bool CanExecute(object parameter) => true;
+		public ChangeColorThemeRequest(string theme) => Theme = theme;
+
+		public string Theme { get; }
+	}
+
+	public class SettingsChangedEvent : INotification { }
+
+	public class ChangeColorThemeHandler : IRequestHandler<ChangeColorThemeRequest>
+	{
+		private readonly IMediator _mediator;
+		private readonly ISettings _settings;
+
+		public ChangeColorThemeHandler(IMediator mediator, ISettings settings)
+		{
+			_mediator = mediator;
+			_settings = settings;
+		}
 
 		/// <inheritdoc />
-		public void Execute(object parameter)
+		[ExcludeFromCodeCoverage(Justification = "Uses static class and Resources of AdonisUI")]
+		public Task<Unit> Handle(ChangeColorThemeRequest request, CancellationToken token)
 		{
-			Uri theme = parameter switch
+			Uri theme = request.Theme switch
 			{
 				"Light"   => ResourceLocator.LightColorScheme,
 				"Dark"    => ResourceLocator.DarkColorScheme,
@@ -23,11 +42,12 @@ namespace UI.Commands
 
 			if (theme != null)
 			{
-				ResourceLocator.SetColorScheme(Application.Current.Resources, theme);
+				ResourceLocator.SetColorScheme(System.Windows.Application.Current.Resources, theme);
+				_settings.ColorTheme = request.Theme;
+				_mediator.Publish(new SettingsChangedEvent(), token);
 			}
-		}
 
-		/// <inheritdoc />
-		public event EventHandler CanExecuteChanged;
+			return Unit.Task;
+		}
 	}
 }

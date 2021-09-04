@@ -1,5 +1,5 @@
 using Microsoft.Toolkit.Mvvm.Messaging;
-using UI;
+using MP3Extender.WPF.ViewModels;
 using Xunit;
 
 namespace Tests.Unit.ViewModels

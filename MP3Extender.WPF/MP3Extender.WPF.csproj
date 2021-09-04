@@ -6,21 +6,20 @@
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 		<DisableWinExeOutputInference>true</DisableWinExeOutputInference>
-		<RootNamespace>UI</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="AdonisUI.ClassicTheme.NET5" Version="1.17.1" />
 		<PackageReference Include="AdonisUI.NET5" Version="1.17.1" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2" />
-		<PackageReference Include="NSubstitute" Version="4.2.2" />
-		<PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <None Remove="UI.csproj.DotSettings" />
+	  <None Remove="MP3Extender.WPF.csproj.DotSettings" />
 	</ItemGroup>
 
 	<ItemGroup>

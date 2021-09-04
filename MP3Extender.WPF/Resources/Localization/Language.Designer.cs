@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UI.Localization {
+namespace MP3Extender.WPF.Localization {
     using System;
     
     

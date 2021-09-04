@@ -2,8 +2,8 @@ using System;
 using System.Windows.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using MP3Extender.WPF.Localization;
 using NSubstitute;
-using UI.Localization;
 using Xunit;
 
 namespace Tests.Unit.Localization

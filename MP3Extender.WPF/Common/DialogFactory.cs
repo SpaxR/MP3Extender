@@ -1,6 +1,4 @@
-using UI.Dialogs.FolderBrowser;
-
-namespace UI.Dialogs
+namespace MP3Extender.WPF
 {
 	public interface IDialogFactory
 	{

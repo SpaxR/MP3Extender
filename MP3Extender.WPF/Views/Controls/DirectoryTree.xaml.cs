@@ -1,11 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace UI.Controls
+namespace MP3Extender.WPF.Controls
 {
-	/// <summary>Interaction logic for DirectoryTree.xaml</summary>
+	[ExcludeFromCodeCoverage(Justification = "UI-Class")]
 	public partial class DirectoryTree
 	{
-		[ExcludeFromCodeCoverage]
 		public DirectoryTree() => InitializeComponent();
 	}
 }

@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
-namespace UI.Localization
+namespace MP3Extender.WPF.Localization
 {
 	public class PhraseExtension : Binding, IValueConverter
 	{

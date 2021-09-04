@@ -1,11 +1,11 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using Microsoft.Toolkit.Mvvm.Messaging;
-using UI.Commands;
+using MP3Extender.WPF.Commands;
 
-namespace UI.Controls.FileList
+namespace MP3Extender.WPF.ViewModels
 {
-	public class FileListViewModel : ViewModelBase, IRecipient<CurrentDirectoryChangedEvent>
+	public class FileListViewModel : ViewModelBase, IRecipient<DirectoryChangedEvent>
 	{
 		private string _currentDirectory;
 
@@ -28,7 +28,7 @@ namespace UI.Controls.FileList
 		}
 
 		/// <inheritdoc />
-		public void Receive(CurrentDirectoryChangedEvent message)
+		public void Receive(DirectoryChangedEvent message)
 		{
 			if (Directory.Exists(message.Path))
 			{

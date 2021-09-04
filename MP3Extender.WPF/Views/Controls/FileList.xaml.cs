@@ -1,11 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace UI.Controls.FileList
+namespace MP3Extender.WPF.Controls
 {
-	/// <summary>Interaction logic for FileList.xaml</summary>
+	[ExcludeFromCodeCoverage(Justification = "UI-Class")]
 	public partial class FileList
 	{
-		[ExcludeFromCodeCoverage]
 		public FileList() => InitializeComponent();
 	}
 }

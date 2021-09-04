@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Windows;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
-using UI.Configuration;
-using UI.Controls.FileList;
-using UI.Dialogs;
-using UI.Localization;
-using UI.Settings;
+using MP3Extender.WPF.Localization;
+using MP3Extender.WPF.ViewModels;
 
-namespace UI
+namespace MP3Extender.WPF
 {
-	/// <summary>Interaction logic for App.xaml</summary>
-	[ExcludeFromCodeCoverage]
+	[ExcludeFromCodeCoverage(Justification = "UI-Class")]
 	public partial class App
 	{
 		public App()
@@ -34,6 +32,7 @@ namespace UI
 
 		private static IServiceProvider ConfigureServices(IServiceCollection services)
 		{
+			services.AddMediatR(Assembly.GetExecutingAssembly());
 			services.AddSingleton<IMessenger>(StrongReferenceMessenger.Default);
 
 			// Application
@@ -42,7 +41,7 @@ namespace UI
 			services.AddTransient<SettingsViewModel>();
 
 			// Infrastructure
-			services.AddSingleton<Config>();
+			services.AddSingleton<Application.Settings>();
 			services.AddSingleton<ILocalizationProvider>(new LocalizationProvider(Language.ResourceManager));
 			services.AddTransient<IDialogFactory, DialogFactory>();
 

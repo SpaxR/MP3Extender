@@ -2,7 +2,7 @@ using System;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Messaging;
 
-namespace UI
+namespace MP3Extender.WPF.ViewModels
 {
 	public abstract class ViewModelBase : ObservableRecipient, IDisposable
 	{

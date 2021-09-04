@@ -1,22 +1,22 @@
 using System.Configuration;
 using System.Diagnostics.CodeAnalysis;
 
-namespace UI.Configuration
+namespace MP3Extender.Application
 {
-	public interface IConfig
+	public interface ISettings
 	{
-		public bool   UseDarkTheme { get; set; }
-		public string RootFolder   { get; set; }
+		public string ColorTheme { get; set; }
+		public string RootFolder { get; set; }
 	}
 
 	[ExcludeFromCodeCoverage]
-	public sealed class Config : ApplicationSettingsBase, IConfig
+	public sealed class Settings : ApplicationSettingsBase, ISettings
 	{
-		[UserScopedSetting, DefaultSettingValue("False")]
-		public bool UseDarkTheme
+		[UserScopedSetting, DefaultSettingValue("Light")]
+		public string ColorTheme
 		{
-			get => (bool)this[nameof(UseDarkTheme)];
-			set => this[nameof(UseDarkTheme)] = value;
+			get => (string)this[nameof(ColorTheme)];
+			set => this[nameof(ColorTheme)] = value;
 		}
 
 		[UserScopedSetting]

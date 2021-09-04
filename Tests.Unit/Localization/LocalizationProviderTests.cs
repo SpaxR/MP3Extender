@@ -2,8 +2,8 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Resources;
 using System.Threading;
+using MP3Extender.WPF.Localization;
 using NSubstitute;
-using UI.Localization;
 using Xunit;
 
 namespace Tests.Unit.Localization

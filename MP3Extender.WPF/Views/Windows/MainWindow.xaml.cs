@@ -1,11 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace UI
+namespace MP3Extender.WPF
 {
-	/// <summary>Interaction logic for MainWindow.xaml</summary>
+	[ExcludeFromCodeCoverage(Justification = "UI-Class")]
 	public partial class MainWindow
 	{
-		[ExcludeFromCodeCoverage]
 		public MainWindow() => InitializeComponent();
 	}
 }

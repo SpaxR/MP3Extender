@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
 
-namespace UI.Dialogs.FolderBrowser
+namespace MP3Extender.WPF
 {
 	public interface IFolderBrowserDialog
 	{

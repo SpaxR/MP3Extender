@@ -1,18 +1,22 @@
-using UI.Commands;
+using System.Threading.Tasks;
+using MP3Extender.Application;
+using MP3Extender.WPF.Commands;
+using NSubstitute;
 using Xunit;
 
 namespace Tests.Unit.Commands
 {
-	public class ChangeColorThemeTests : TestBase<ChangeColorTheme>
+	public class ChangeColorThemeTests : TestBase<ChangeColorThemeHandler>
 	{
-		/// <inheritdoc />
-		protected override ChangeColorTheme CreateSUT() => new();
+		private readonly ISettings _settingsMock = Substitute.For<ISettings>();
 
+		/// <inheritdoc />
+		protected override ChangeColorThemeHandler CreateSUT() => new(MediatorMock, _settingsMock);
 
 		[Fact]
-		public void GivenAnyParameter_WhenCanExecute_ThenReturnsTrue()
+		public async Task GivenInvalidRequest_WhenCalled_ThenReturnsTank()
 		{
-			Assert.True(SUT.CanExecute(null));
+			await SUT.Handle(new ChangeColorThemeRequest("INVALID"), default);
 		}
 	}
 }

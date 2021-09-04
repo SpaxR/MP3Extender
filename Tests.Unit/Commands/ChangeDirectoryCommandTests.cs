@@ -1,20 +1,18 @@
-using Microsoft.Toolkit.Mvvm.Messaging;
+using System.Threading;
+using MP3Extender.WPF;
+using MP3Extender.WPF.Commands;
 using NSubstitute;
-using UI.Commands;
-using UI.Dialogs;
-using UI.Dialogs.FolderBrowser;
 using Xunit;
 
 namespace Tests.Unit.Commands
 {
-	public class ChangeDirectoryCommandTests : TestBase<ChangeCurrentDirectoryHandler>
+	public class ChangeDirectoryCommandTests : TestBase<ChangeDirectoryHandler>
 	{
-		private readonly IMessenger     _messenger         = Substitute.For<IMessenger>();
 		private readonly IDialogFactory _dialogFactoryMock = Substitute.For<IDialogFactory>();
 
 		/// <inheritdoc />
-		protected override ChangeCurrentDirectoryHandler CreateSUT()
-			=> new(_messenger, _dialogFactoryMock);
+		protected override ChangeDirectoryHandler CreateSUT()
+			=> new(MediatorMock, _dialogFactoryMock);
 
 		private IFolderBrowserDialog SetupFolderBrowser(string path)
 		{
@@ -36,13 +34,12 @@ namespace Tests.Unit.Commands
 		}
 
 
-		// GIVEN WHEN THEN
 		[Fact]
-		public void GivenRequest_ThenShowsFolderBrowserDialog()
+		public void GivenValidRequest_ThenShowsFolderBrowserDialog()
 		{
 			var dialog = SetupFolderBrowser(null);
 
-			SUT.Receive(new ChangeCurrentDirectoryRequest());
+			SUT.Handle(new ChangeDirectoryRequest(), CancellationToken.None);
 
 			dialog.Received(1).ShowDialog();
 		}
@@ -53,9 +50,11 @@ namespace Tests.Unit.Commands
 		{
 			SetupFolderBrowser("SOME PATH");
 
-			SUT.Receive(new ChangeCurrentDirectoryRequest());
+			SUT.Handle(new ChangeDirectoryRequest(), default);
 
-			_messenger.Received().Send(Arg.Is<CurrentDirectoryChangedEvent>(ev => ev.Path.Equals("SOME PATH")));
+			MediatorMock
+				.Received(1)
+				.Publish(Arg.Is<DirectoryChangedEvent>(ev => "SOME PATH".Equals(ev.Path)));
 		}
 	}
 }

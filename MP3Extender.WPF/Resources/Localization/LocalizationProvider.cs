@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Resources;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 
-namespace UI.Localization
+namespace MP3Extender.WPF.Localization
 {
 	public interface ILocalizationProvider : INotifyPropertyChanged
 	{
