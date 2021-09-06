@@ -2,29 +2,52 @@ using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using MP3Extender.Application;
-using MP3Extender.WPF.Commands;
+using MP3Extender.WPF.Services;
 
 namespace MP3Extender.WPF.ViewModels
 {
-	public class SettingsViewModel : ViewModelBase, IRecipient<SettingsChangedEvent>
+	public interface ISettingsViewModel
 	{
-		private readonly ISettings _settings;
+		public ColorTheme Theme          { get; }
+		public string     RootFolderPath { get; }
 
-		public string ColorTheme     => _settings.ColorTheme;
-		public string RootFolderPath => _settings.RootFolder;
+		public ICommand ChangeColorTheme { get; }
+		public ICommand ChangeRootFolder { get; }
+	}
+
+	public class SettingsViewModel : ViewModelBase, ISettingsViewModel
+	{
+		private ColorTheme _theme;
+		private string     _rootFolderPath;
+
+		public ColorTheme Theme
+		{
+			get => _theme;
+			private set => SetProperty(ref _theme, value);
+		}
+
+		public string RootFolderPath
+		{
+			get => _rootFolderPath;
+			private set => SetProperty(ref _rootFolderPath, value);
+		}
 
 		public ICommand ChangeColorTheme { get; }
 		public ICommand ChangeRootFolder { get; }
 
 		/// <inheritdoc />
-		public SettingsViewModel(IMessenger messenger, ISettings settings) : base(messenger)
+		public SettingsViewModel(IMessenger         messenger,
+								 IColorThemeService themeService,
+								 IFileSystemService fileSystemService)
+			: base(messenger)
 		{
-			_settings        = settings;
-			ChangeColorTheme = new RelayCommand<string>(theme => Messenger.Send(new ChangeColorThemeRequest(theme)));
-			ChangeRootFolder = new RelayCommand(() => Messenger.Send<ChangeDirectoryRequest>());
-		}
+			_theme          = themeService.Theme;
+			_rootFolderPath = fileSystemService.RootDirectoryPath;
 
-		/// <inheritdoc />
-		public void Receive(SettingsChangedEvent message) => OnPropertyChanged();
+			ChangeColorTheme = new RelayCommand<ColorTheme>(themeService.SetTheme);
+			ChangeRootFolder = new RelayCommand(fileSystemService.ChangeRootDirectory);
+			messenger.Register<ColorThemeChangedEvent>(this, (_, ev) => Theme          = ev.Theme);
+			messenger.Register<DirectoryChangedEvent>(this, (_,  ev) => RootFolderPath = ev.Path);
+		}
 	}
 }

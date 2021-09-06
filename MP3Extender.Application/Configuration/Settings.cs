@@ -5,18 +5,18 @@ namespace MP3Extender.Application
 {
 	public interface ISettings
 	{
-		public string ColorTheme { get; set; }
-		public string RootFolder { get; set; }
+		public ColorTheme Theme      { get; set; }
+		public string     RootFolder { get; set; }
 	}
 
 	[ExcludeFromCodeCoverage]
 	public sealed class Settings : ApplicationSettingsBase, ISettings
 	{
 		[UserScopedSetting, DefaultSettingValue("Light")]
-		public string ColorTheme
+		public ColorTheme Theme
 		{
-			get => (string)this[nameof(ColorTheme)];
-			set => this[nameof(ColorTheme)] = value;
+			get => (ColorTheme)this[nameof(Theme)];
+			set => this[nameof(Theme)] = value;
 		}
 
 		[UserScopedSetting]

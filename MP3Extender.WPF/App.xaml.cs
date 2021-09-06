@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using System.Windows;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using MP3Extender.Application;
+using MP3Extender.WPF.Factories;
 using MP3Extender.WPF.Localization;
+using MP3Extender.WPF.Services;
 using MP3Extender.WPF.ViewModels;
 
 namespace MP3Extender.WPF
@@ -32,16 +33,18 @@ namespace MP3Extender.WPF
 
 		private static IServiceProvider ConfigureServices(IServiceCollection services)
 		{
-			services.AddMediatR(Assembly.GetExecutingAssembly());
 			services.AddSingleton<IMessenger>(StrongReferenceMessenger.Default);
 
 			// Application
 			services.AddTransient<MainViewModel>();
 			services.AddTransient<FileListViewModel>();
-			services.AddTransient<SettingsViewModel>();
+			services.AddTransient<ISettingsViewModel, SettingsViewModel>();
+
+			services.AddTransient<ColorThemeService>();
+			services.AddTransient<FileSystemService>();
 
 			// Infrastructure
-			services.AddSingleton<Application.Settings>();
+			services.AddSingleton<ISettings, Settings>();
 			services.AddSingleton<ILocalizationProvider>(new LocalizationProvider(Language.ResourceManager));
 			services.AddTransient<IDialogFactory, DialogFactory>();
 

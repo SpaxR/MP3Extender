@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using MP3Extender.WPF.Commands;
+using MP3Extender.WPF.Services;
 using MP3Extender.WPF.ViewModels;
 using Xunit;
 

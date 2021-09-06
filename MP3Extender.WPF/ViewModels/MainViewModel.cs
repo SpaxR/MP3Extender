@@ -1,7 +1,7 @@
 using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
-using MP3Extender.WPF.Commands;
+using MP3Extender.WPF.Factories;
 
 namespace MP3Extender.WPF.ViewModels
 {
@@ -11,10 +11,10 @@ namespace MP3Extender.WPF.ViewModels
 
 		public ICommand OpenSettingsWindow { get; }
 
-		public MainViewModel(IMessenger messenger) : base(messenger)
+		public MainViewModel(IMessenger messenger, IDialogFactory dialogFactory) : base(messenger)
 		{
 			Files              = new FileListViewModel(messenger);
-			OpenSettingsWindow = new RelayCommand(() => messenger.Send<OpenSettingsWindowRequest>());
+			OpenSettingsWindow = new RelayCommand(() => dialogFactory.CreateSettingsWindow().ShowDialog());
 		}
 	}
 }

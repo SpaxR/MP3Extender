@@ -1,18 +1,19 @@
-using System.Threading;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using MP3Extender.WPF;
-using MP3Extender.WPF.Commands;
+using MP3Extender.WPF.Factories;
+using MP3Extender.WPF.Services;
 using NSubstitute;
 using Xunit;
 
-namespace Tests.Unit.Commands
+namespace Tests.Unit.Services
 {
-	public class ChangeDirectoryCommandTests : TestBase<ChangeDirectoryHandler>
+	public class FileSystemServiceTests : TestBase<FileSystemService>
 	{
 		private readonly IDialogFactory _dialogFactoryMock = Substitute.For<IDialogFactory>();
 
 		/// <inheritdoc />
-		protected override ChangeDirectoryHandler CreateSUT()
-			=> new(MediatorMock, _dialogFactoryMock);
+		protected override FileSystemService CreateSUT()
+			=> new(MessengerMock, _dialogFactoryMock);
 
 		private IFolderBrowserDialog SetupFolderBrowser(string path)
 		{
@@ -35,26 +36,26 @@ namespace Tests.Unit.Commands
 
 
 		[Fact]
-		public void GivenValidRequest_ThenShowsFolderBrowserDialog()
+		public void ChangingRootDirectory_ShowsFolderBrowserDialog()
 		{
 			var dialog = SetupFolderBrowser(null);
 
-			SUT.Handle(new ChangeDirectoryRequest(), CancellationToken.None);
+			SUT.ChangeRootDirectory();
 
 			dialog.Received(1).ShowDialog();
 		}
 
 
 		[Fact]
-		public void GivenRequest_WhenFolderSelected_ThenPublishesEvent()
+		public void ChangingRootDirectory_WhenSuccessful_SendsDirectoryChangedEvent()
 		{
 			SetupFolderBrowser("SOME PATH");
 
-			SUT.Handle(new ChangeDirectoryRequest(), default);
+			SUT.ChangeRootDirectory();
 
-			MediatorMock
+			MessengerMock
 				.Received(1)
-				.Publish(Arg.Is<DirectoryChangedEvent>(ev => "SOME PATH".Equals(ev.Path)));
+				.Send(Arg.Is<DirectoryChangedEvent>(ev => "SOME PATH".Equals(ev.Path)));
 		}
 	}
 }

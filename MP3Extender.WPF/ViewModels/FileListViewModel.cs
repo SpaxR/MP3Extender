@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using Microsoft.Toolkit.Mvvm.Messaging;
-using MP3Extender.WPF.Commands;
+using MP3Extender.WPF.Services;
 
 namespace MP3Extender.WPF.ViewModels
 {

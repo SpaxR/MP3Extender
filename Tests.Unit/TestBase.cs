@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using NSubstitute;
@@ -22,8 +21,6 @@ namespace Tests.Unit
 		protected readonly ILogger<T> LoggerMock = Substitute.For<ILogger<T>>();
 
 		protected readonly IMessenger MessengerMock = Substitute.For<IMessenger>();
-
-		protected readonly IMediator MediatorMock = Substitute.For<IMediator>();
 
 		protected abstract T CreateSUT();
 	}
