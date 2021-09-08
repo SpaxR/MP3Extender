@@ -1,4 +1,5 @@
 using Microsoft.Toolkit.Mvvm.Messaging;
+using MP3Extender.Application;
 using MP3Extender.WPF;
 using MP3Extender.WPF.Factories;
 using MP3Extender.WPF.Services;
@@ -9,11 +10,12 @@ namespace Tests.Unit.Services
 {
 	public class FileSystemServiceTests : TestBase<FileSystemService>
 	{
+		private readonly ISettings      _settingsMock      = Substitute.For<ISettings>();
 		private readonly IDialogFactory _dialogFactoryMock = Substitute.For<IDialogFactory>();
 
 		/// <inheritdoc />
 		protected override FileSystemService CreateSUT()
-			=> new(MessengerMock, _dialogFactoryMock);
+			=> new(MessengerMock, _dialogFactoryMock, _settingsMock);
 
 		private IFolderBrowserDialog SetupFolderBrowser(string path)
 		{
@@ -45,7 +47,6 @@ namespace Tests.Unit.Services
 			dialog.Received(1).ShowDialog();
 		}
 
-
 		[Fact]
 		public void ChangingRootDirectory_WhenSuccessful_SendsDirectoryChangedEvent()
 		{
@@ -56,6 +57,16 @@ namespace Tests.Unit.Services
 			MessengerMock
 				.Received(1)
 				.Send(Arg.Is<DirectoryChangedEvent>(ev => "SOME PATH".Equals(ev.Path)));
+		}
+
+		[Fact]
+		public void GivenConfig_WhenLoaded_RootDirectoryPathEqualsConfig()
+		{
+			_settingsMock.RootFolder.Returns("SOME FOLDER");
+
+			string path = SUT.RootDirectoryPath;
+
+			Assert.Equal("SOME FOLDER", path);
 		}
 	}
 }

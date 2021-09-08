@@ -17,5 +17,16 @@ namespace Tests.Unit.Services
 		{
 			Assert.NotNull(SUT);
 		}
+
+		[Fact]
+		public void GivenInstance_WhenConfigLoaded_ThenThemeEqualsSettings()
+		{
+			_settingsMock.Theme.Returns(ColorTheme.Classic);
+
+			var theme = SUT.Theme;
+
+			Assert.Equal(ColorTheme.Classic, theme);
+		}
+
 	}
 }

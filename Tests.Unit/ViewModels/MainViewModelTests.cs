@@ -1,4 +1,3 @@
-using MP3Extender.WPF;
 using MP3Extender.WPF.Factories;
 using MP3Extender.WPF.ViewModels;
 using NSubstitute;
@@ -13,9 +12,15 @@ namespace Tests.Unit.ViewModels
 		protected override MainViewModel CreateSUT() => new(MessengerMock, _dialogFactoryMock);
 
 		[Fact]
-		public void GivenMainViewModel_WhenNotLoaded_ThenFilesIsNotNull()
+		public void FilesViewModel_IsNotNull()
 		{
 			Assert.NotNull(SUT.Files);
+		}
+
+		[Fact]
+		public void OpenSettingsWindowCommand_IsNotNull()
+		{
+			Assert.NotNull(SUT.OpenSettingsWindow);
 		}
 	}
 }
