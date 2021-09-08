@@ -1,5 +1,5 @@
 using Microsoft.Toolkit.Mvvm.Messaging;
-using UI;
+using MP3Extender.WPF.ViewModels;
 using Xunit;
 
 namespace Tests.Unit.ViewModels
@@ -12,7 +12,7 @@ namespace Tests.Unit.ViewModels
 		}
 
 		/// <inheritdoc />
-		protected override ViewModelBase CreateSUT() => new DerivedViewModelBase(MessengerMock.Object);
+		protected override ViewModelBase CreateSUT() => new DerivedViewModelBase(MessengerMock);
 
 		[Fact]
 		public void GivenViewModel_WhenUnchanged_ThenIsActiveIsTrue()

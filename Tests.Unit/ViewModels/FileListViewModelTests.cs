@@ -1,7 +1,7 @@
 using System;
 using System.IO;
-using UI.Commands;
-using UI.Controls.FileList;
+using MP3Extender.WPF.Services;
+using MP3Extender.WPF.ViewModels;
 using Xunit;
 
 namespace Tests.Unit.ViewModels
@@ -18,7 +18,7 @@ namespace Tests.Unit.ViewModels
 
 
 		/// <inheritdoc />
-		protected override FileListViewModel CreateSUT() => new(MessengerMock.Object);
+		protected override FileListViewModel CreateSUT() => new(MessengerMock);
 
 		public void Dispose() => Directory.Delete(_tempDir, true);
 
@@ -32,7 +32,7 @@ namespace Tests.Unit.ViewModels
 		[Fact]
 		public void GivenDirectoryChangedEvent_WhenReceived_ThenPathIsCurrentDirectory()
 		{
-			var request = new CurrentDirectoryChangedEvent { Path = _tempDir };
+			var request = new DirectoryChangedEvent(_tempDir);
 
 			SUT.Receive(request);
 
@@ -43,7 +43,7 @@ namespace Tests.Unit.ViewModels
 		public void GivenDirectoryChangedEvent_WhenDirectoryContainsFiles_ThenFilesContainsFilenames()
 		{
 			string expectedFile = CreateTempFile();
-			var    request      = new CurrentDirectoryChangedEvent { Path = _tempDir };
+			var    request      = new DirectoryChangedEvent(_tempDir);
 
 			SUT.Receive(request);
 
@@ -53,7 +53,7 @@ namespace Tests.Unit.ViewModels
 		[Fact]
 		public void GivenDirectoryChangedEvent_WhenFilesAlreadyLoaded_ThenFilesHasNoDuplicates()
 		{
-			var    request      = new CurrentDirectoryChangedEvent { Path = _tempDir };
+			var    request      = new DirectoryChangedEvent(_tempDir);
 			string expectedFile = CreateTempFile();
 			SUT.Receive(request);
 
@@ -66,7 +66,7 @@ namespace Tests.Unit.ViewModels
 		[Fact]
 		public void GivenDirectoryChangedEvent_WhenDirectoryDoesNotExist_ThenCurrentDirectoryIsErrorText()
 		{
-			var request = new CurrentDirectoryChangedEvent { Path = "INVALID" };
+			var request = new DirectoryChangedEvent("INVALID");
 
 			SUT.Receive(request);
 
@@ -76,7 +76,7 @@ namespace Tests.Unit.ViewModels
 		[Fact]
 		public void GivenDirectoryChangedEvent_WhenDirectoryDoesNotExist_ThenFilesIsEmpty()
 		{
-			var request = new CurrentDirectoryChangedEvent { Path = "INVALID" };
+			var request = new DirectoryChangedEvent("INVALID");
 
 			SUT.Receive(request);
 

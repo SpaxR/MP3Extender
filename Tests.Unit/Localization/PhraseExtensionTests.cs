@@ -2,8 +2,8 @@ using System;
 using System.Windows.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
-using Moq;
-using UI.Localization;
+using MP3Extender.WPF.Localization;
+using NSubstitute;
 using Xunit;
 
 namespace Tests.Unit.Localization
@@ -12,7 +12,7 @@ namespace Tests.Unit.Localization
 	{
 		private string _key;
 
-		private static readonly Mock<ILocalizationProvider> LocalizationMock = new();
+		private static readonly ILocalizationProvider LocalizationMock = Substitute.For<ILocalizationProvider>();
 
 		/// <inheritdoc />
 		protected override PhraseExtension CreateSUT() => new(_key);
@@ -21,7 +21,7 @@ namespace Tests.Unit.Localization
 		{
 			Ioc.Default.ConfigureServices(
 				new ServiceCollection()
-					.AddSingleton(LocalizationMock.Object)
+					.AddSingleton(LocalizationMock)
 					.BuildServiceProvider());
 		}
 
@@ -37,7 +37,7 @@ namespace Tests.Unit.Localization
 			Assert.Equal(BindingMode.OneWay, SUT.Mode);
 			Assert.Equal("[(0)]",            SUT.Path.Path);
 			Assert.Equal(SUT,                SUT.Converter);
-			Assert.Equal(SUT.Source,         LocalizationMock.Object);
+			Assert.Equal(SUT.Source,         LocalizationMock);
 		}
 
 		[Fact]

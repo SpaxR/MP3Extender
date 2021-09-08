@@ -1,61 +1,68 @@
-using Microsoft.Toolkit.Mvvm.Messaging;
+using MP3Extender.Application;
+using MP3Extender.WPF.Services;
+using MP3Extender.WPF.ViewModels;
 using NSubstitute;
-using UI.Commands;
-using UI.Configuration;
-using UI.Settings;
 using Xunit;
 
 namespace Tests.Unit.ViewModels
 {
 	public class SettingsViewModelTests : TestBase<SettingsViewModel>
 	{
-		private readonly IMessenger _messengerMock = Substitute.For<IMessenger>();
-		private readonly IConfig    _configMock    = Substitute.For<IConfig>();
+		private readonly IColorThemeService _colorThemeMock = Substitute.For<IColorThemeService>();
+		private readonly IFileSystemService _fileSystemMock = Substitute.For<IFileSystemService>();
 
 		/// <inheritdoc />
 		protected override SettingsViewModel CreateSUT()
 		{
-			return new SettingsViewModel(_messengerMock, _configMock);
+			return new SettingsViewModel(MessengerMock, _colorThemeMock, _fileSystemMock);
 		}
 
 		[Fact]
-		public void GivenConfig_WhenNotNull_ThenUseDarkThemeEqualsConfig()
+		public void GivenConfig_WhenNotNull_ThenThemeEqualsConfig()
 		{
-			_configMock.UseDarkTheme.Returns(true);
+			_colorThemeMock.Theme.Returns(ColorTheme.Light);
 
-			bool result = SUT.UseDarkTheme;
+			ColorTheme result = SUT.Theme;
 
-			Assert.True(result);
+			Assert.Equal(ColorTheme.Light, result);
 		}
 
 		[Fact]
 		public void GivenConfig_WhenNotNull_ThenRootFolderPathEqualsConfig()
 		{
-			_configMock.RootFolder.Returns("SOME PATH");
+			_fileSystemMock.RootDirectoryPath.Returns("SOME PATH");
 
 			string result = SUT.RootFolderPath;
 
 			Assert.Equal("SOME PATH", result);
 		}
 
-		[Fact]
-		public void GivenConfig_WhenChangeThemeExecuted_ThenDarkThemeConfigGetsToggled()
-		{
-			_configMock.UseDarkTheme.Returns(false);
-
-			SUT.ChangeTheme.Execute(null);
-			Assert.True(_configMock.UseDarkTheme);
-
-			SUT.ChangeTheme.Execute(null);
-			Assert.False(_configMock.UseDarkTheme);
-		}
-
-		[Fact]
-		public void GivenMessenger_WhenChangeRootFolderExecuted_ThenChangeCurrentDirectoryRequestGetsSend()
-		{
-			SUT.ChangeRootFolder.Execute(null);
-
-			_messengerMock.Received().Send(Arg.Any<ChangeCurrentDirectoryRequest>());
-		}
+		// [Fact]
+		// public void GivenConfig_WhenChangeThemeExecuted_ThenChangeThemeRequestGetsRaised()
+		// {
+		// 	SUT.ChangeColorTheme.Execute("THEME");
+		//
+		// 	MessengerMock
+		// 		.Received(1)
+		// 		.Send(Arg.Is<ChangeColorThemeRequest>(req => "THEME".Equals(req.Theme)));
+		// }
+		//
+		// [Fact]
+		// public void GivenInstance_WhenChangeRootFolderExecuted_ThenRaisesChangeDirectoryRequest()
+		// {
+		// 	SUT.ChangeRootFolder.Execute(null);
+		//
+		// 	MessengerMock
+		// 		.Received(1)
+		// 		.Send(Arg.Any<ChangeDirectoryRequest>());
+		// }
+		//
+		// [Fact]
+		// public void GivenValidSettingsChangedEvent_WhenReceived_RaisesOnPropertyChanged()
+		// {
+		// 	var settingsChangedEvent = new SettingsChangedEvent();
+		//
+		// 	Assert.PropertyChanged(SUT, nameof(SUT.Receive), () => SUT.Receive(settingsChangedEvent));
+		// }
 	}
 }

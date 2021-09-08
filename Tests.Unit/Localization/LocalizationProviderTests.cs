@@ -2,18 +2,18 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Resources;
 using System.Threading;
-using Moq;
-using UI.Localization;
+using MP3Extender.WPF.Localization;
+using NSubstitute;
 using Xunit;
 
 namespace Tests.Unit.Localization
 {
 	public class LocalizationProviderTests : TestBase<LocalizationProvider>
 	{
-		private readonly Mock<ResourceManager> _resourceManagerMock = new();
+		private readonly ResourceManager _resourceManagerMock = Substitute.For<ResourceManager>();
 
 		/// <inheritdoc />
-		protected override LocalizationProvider CreateSUT() => new(_resourceManagerMock.Object);
+		protected override LocalizationProvider CreateSUT() => new(_resourceManagerMock);
 
 
 		[Fact]
@@ -41,7 +41,7 @@ namespace Tests.Unit.Localization
 
 			_ = SUT["TEST"];
 
-			_resourceManagerMock.Verify(r => r.GetString("TEST", Thread.CurrentThread.CurrentUICulture));
+			_resourceManagerMock.Received(1).GetString("TEST", Thread.CurrentThread.CurrentUICulture);
 		}
 	}
 }

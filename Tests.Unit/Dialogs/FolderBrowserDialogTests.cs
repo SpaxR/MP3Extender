@@ -1,4 +1,4 @@
-using UI.Dialogs.FolderBrowser;
+using MP3Extender.WPF;
 using Xunit;
 
 namespace Tests.Unit.Dialogs

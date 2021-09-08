@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Mvvm.Messaging;
-using Moq;
+using NSubstitute;
 
 namespace Tests.Unit
 {
@@ -18,11 +18,10 @@ namespace Tests.Unit
 		}
 
 
-		protected readonly Mock<ILogger<T>> LoggerMock = new();
+		protected readonly ILogger<T> LoggerMock = Substitute.For<ILogger<T>>();
 
-		protected readonly Mock<IMessenger> MessengerMock = new();
+		protected readonly IMessenger MessengerMock = Substitute.For<IMessenger>();
 
 		protected abstract T CreateSUT();
-
 	}
 }

@@ -1,0 +1,20 @@
+<UserControl x:Class="MP3Extender.WPF.Controls.MainWindowToolbar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <ToolBarTray>
+        <ToolBar>
+            <Button>Add Column</Button>
+            <Button>Rename Column</Button>
+            <Button>Remove Column</Button>
+        </ToolBar>
+
+        <ToolBar>
+            <Button>Add to Playlist</Button>
+        </ToolBar>
+
+    </ToolBarTray>
+</UserControl>
