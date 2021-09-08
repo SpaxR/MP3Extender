@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MP3Extender.Avalonia.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:MP3Extender.Avalonia.Views.Controls"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="MP3Extender.Avalonia.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="MP3Extender.Avalonia">
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="Auto,2,*">
+
+        <!-- Directory-Tree -->
+        <controls:DirectoryTree Grid.Column="0" />
+
+        <!-- Splitter -->
+        <GridSplitter Grid.Column="1" Padding="-3 0" />
+
+        <!-- Files -->
+        <controls:FileList Grid.Column="2" DataContext="{Binding Files}" />
+
+    </Grid>
+
+</Window>
