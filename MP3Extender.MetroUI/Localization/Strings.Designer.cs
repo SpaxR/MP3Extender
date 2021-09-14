@@ -59,5 +59,14 @@ namespace MP3Extender.MetroUI.Localization {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Functionality not available yet!.
+        /// </summary>
+        internal static string not_implemented {
+            get {
+                return ResourceManager.GetString("not_implemented", resourceCulture);
+            }
+        }
     }
 }

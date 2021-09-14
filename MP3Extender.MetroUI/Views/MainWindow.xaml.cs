@@ -1,8 +1,6 @@
 ﻿namespace MP3Extender.MetroUI.Views
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
+	/// <summary>Interaction logic for MainWindow.xaml</summary>
 	public partial class MainWindow
 	{
 		public MainWindow()

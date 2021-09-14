@@ -1,18 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using MP3Extender.MetroUI.Views;
 
 namespace MP3Extender.MetroUI
 {
-	/// <summary>
-	/// Interaction logic for App.xaml
-	/// </summary>
-	public partial class App : Application
+	/// <summary>Interaction logic for App.xaml</summary>
+	public partial class App
 	{
-		
+		public App()
+		{
+			var services = new ServiceCollection();
+
+			services
+				.AddViewModels()
+				.AddLocalization()
+				.AddSingleton<IMessenger>(StrongReferenceMessenger.Default);
+
+			Ioc.Default.ConfigureServices(services.BuildServiceProvider());
+		}
+
+		/// <inheritdoc />
+		protected override void OnStartup(StartupEventArgs e)
+		{
+			base.OnStartup(e);
+			new MainWindow { DataContext = Ioc.Default.GetService<MainViewModel>() }
+				.Show();
+		}
 	}
 }

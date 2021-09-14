@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
 namespace MP3Extender.MetroUI.Localization
 {
@@ -10,7 +11,7 @@ namespace MP3Extender.MetroUI.Localization
 		public PhraseExtension(string key)
 		{
 			Mode      = BindingMode.OneWay;
-			Source    = LocalizationProvider.Instance;
+			Source    = Ioc.Default.GetRequiredService<ILocalizationProvider>();
 			Path      = new PropertyPath("[(0)]", key);
 			Converter = this;
 		}

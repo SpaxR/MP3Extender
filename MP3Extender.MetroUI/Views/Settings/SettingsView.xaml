@@ -18,6 +18,10 @@
 
     <StackPanel>
 
+        <TextBlock Text="{Binding TestString}" />
+
+        <Separator />
+
         <mah:ToggleSwitch>Some Setting 1</mah:ToggleSwitch>
 
         <Separator />

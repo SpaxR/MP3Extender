@@ -1,9 +1,18 @@
+using System.ComponentModel;
 using System.Globalization;
 using System.Resources;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace MP3Extender.MetroUI.Localization
 {
-	public class LocalizationProvider
+	public interface ILocalizationProvider : INotifyPropertyChanged
+	{
+		public string this[string key] { get; }
+		public CultureInfo CurrentCulture { get; set; }
+	}
+
+
+	public class LocalizationProvider : ObservableObject, ILocalizationProvider
 	{
 		private readonly ResourceManager _manager;
 
@@ -15,12 +24,6 @@ namespace MP3Extender.MetroUI.Localization
 			set => CultureInfo.CurrentUICulture = value;
 		}
 
-		// Todo Refactor Singleton-Pattern
-		public static LocalizationProvider Instance { get; } = new();
-
-		public LocalizationProvider()
-		{
-			_manager = Strings.ResourceManager;
-		}
+		public LocalizationProvider(ResourceManager manager) => _manager = manager;
 	}
 }

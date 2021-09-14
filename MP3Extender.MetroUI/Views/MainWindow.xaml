@@ -9,20 +9,21 @@
                  xmlns:editor="clr-namespace:MP3Extender.MetroUI.Views.Editor"
                  xmlns:settings="clr-namespace:MP3Extender.MetroUI.Views.Settings"
                  xmlns:about="clr-namespace:MP3Extender.MetroUI.Views.About"
+                 xmlns:i18N="clr-namespace:MP3Extender.MetroUI.Localization"
                  mc:Ignorable="d" d:DataContext="{d:DesignInstance local:MainViewModel}"
-                 Title="Mp3Extender" Height="450" Width="800">
+                 Title="Mp3Extender" SizeToContent="WidthAndHeight">
     <mah:MetroAnimatedTabControl TabStripPlacement="Left" TabStripMargin="10" Margin="5 10">
         <mah:MetroTabItem Header="{icons:MaterialDesign InsertDriveFile, Width=24, Height=24}" Padding="0 20">
-            <editor:EditorView />
+            <editor:EditorView DataContext="{Binding EditorVM}" />
         </mah:MetroTabItem>
         <mah:MetroTabItem Header="{icons:MaterialDesign FormatListNumbered, Width=24, Height=24}" Padding="0 20">
-            Not available yet!
+            <TextBlock Text="{i18N:Phrase not_implemented}" />
         </mah:MetroTabItem>
         <mah:MetroTabItem Header="{icons:MaterialDesign Settings, Width=24, Height=24}" Padding="0 20">
-            <settings:SettingsView />
+            <settings:SettingsView DataContext="{Binding SettingsVM}" />
         </mah:MetroTabItem>
         <mah:MetroTabItem Header="{icons:MaterialDesign Info, Width=24, Height=24}" Padding="0 20">
-            <about:AboutView />
+            <about:AboutView DataContext="{Binding AboutVM}" />
         </mah:MetroTabItem>
     </mah:MetroAnimatedTabControl>
 </mah:MetroWindow>
