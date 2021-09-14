@@ -2,16 +2,15 @@ using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
-namespace MP3Extender.WPF.Localization
+namespace MP3Extender.MetroUI.Localization
 {
 	public class PhraseExtension : Binding, IValueConverter
 	{
 		public PhraseExtension(string key)
 		{
 			Mode      = BindingMode.OneWay;
-			Source    = Ioc.Default.GetService<ILocalizationProvider>();
+			Source    = LocalizationProvider.Instance;
 			Path      = new PropertyPath("[(0)]", key);
 			Converter = this;
 		}
