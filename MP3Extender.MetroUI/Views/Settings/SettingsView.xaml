@@ -16,23 +16,27 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel>
+    <StackPanel Orientation="Vertical">
 
-        <TextBlock Text="{Binding TestString}" />
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Vertical">
+                <TextBlock>Use Dark Colors</TextBlock>
+                <mah:ToggleSwitch IsEnabled="{Binding Settings.UseDarkColors}" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock>Accents</TextBlock>
+                <ComboBox ItemsSource="{Binding Settings.AvailableThemes}"
+                          SelectedItem="{Binding Settings.ColorTheme}" />
+            </StackPanel>
+        </StackPanel>
 
         <Separator />
 
-        <mah:ToggleSwitch>Some Setting 1</mah:ToggleSwitch>
+        <StackPanel Orientation="Horizontal">
+            <Button>Set Root</Button>
+            <TextBlock Text="{Binding Settings.RootFolder, TargetNullValue='No Folder Selected'}" />
 
-        <Separator />
-
-        <TextBlock>Some Setting 2</TextBlock>
-        <mah:ToggleSwitch Content="Aktiviert" IsEnabled="True" />
-
-        <Separator />
-
-        <TextBlock>Some Setting 3</TextBlock>
-        <mah:ToggleSwitch>Nicht Aktiviert</mah:ToggleSwitch>
+        </StackPanel>
 
         <Separator />
 

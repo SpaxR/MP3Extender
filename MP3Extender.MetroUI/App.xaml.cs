@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using MP3Extender.Application;
 using MP3Extender.MetroUI.Views;
 
 namespace MP3Extender.MetroUI
@@ -16,7 +17,8 @@ namespace MP3Extender.MetroUI
 			services
 				.AddViewModels()
 				.AddLocalization()
-				.AddSingleton<IMessenger>(StrongReferenceMessenger.Default);
+				.AddSingleton<IMessenger>(StrongReferenceMessenger.Default)
+				.AddSingleton<ISettings, Settings>();
 
 			Ioc.Default.ConfigureServices(services.BuildServiceProvider());
 		}

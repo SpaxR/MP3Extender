@@ -9,10 +9,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MahApps.Metro" Version="2.4.7"/>
-		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0"/>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2"/>
-		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2"/>
+		<PackageReference Include="MahApps.Metro" Version="2.4.7" />
+		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -31,7 +31,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Remove="MP3Extender.MetroUI.csproj.DotSettings"/>
+		<None Remove="MP3Extender.MetroUI.csproj.DotSettings" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\MP3Extender.Application\MP3Extender.Application.csproj" />
 	</ItemGroup>
 
 </Project>
