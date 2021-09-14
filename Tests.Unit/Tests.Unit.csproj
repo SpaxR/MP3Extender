@@ -2,7 +2,6 @@
 
 	<PropertyGroup>
 		<TargetFramework>net5.0-windows</TargetFramework>
-
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
@@ -19,11 +18,11 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Xunit.StaFact" Version="1.1.5-alpha" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\MP3Extender.WPF\MP3Extender.WPF.csproj" />
+	  <ProjectReference Include="..\MP3Extender.Application\MP3Extender.Application.csproj" />
+	  <ProjectReference Include="..\MP3Extender.MetroUI\MP3Extender.MetroUI.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

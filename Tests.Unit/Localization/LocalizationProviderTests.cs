@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Resources;
 using System.Threading;
-using MP3Extender.WPF.Localization;
+using MP3Extender.MetroUI.Localization;
 using NSubstitute;
 using Xunit;
 

@@ -21,7 +21,12 @@ namespace MP3Extender.MetroUI.Localization
 		public CultureInfo CurrentCulture
 		{
 			get => CultureInfo.CurrentUICulture;
-			set => CultureInfo.CurrentUICulture = value;
+			set
+			{
+				OnPropertyChanging();
+				CultureInfo.CurrentUICulture = value;
+				OnPropertyChanged();
+			}
 		}
 
 		public LocalizationProvider(ResourceManager manager) => _manager = manager;

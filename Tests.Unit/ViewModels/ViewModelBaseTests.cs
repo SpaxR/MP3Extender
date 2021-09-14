@@ -1,5 +1,5 @@
 using Microsoft.Toolkit.Mvvm.Messaging;
-using MP3Extender.WPF.ViewModels;
+using MP3Extender.MetroUI.Common;
 using Xunit;
 
 namespace Tests.Unit.ViewModels
@@ -8,6 +8,9 @@ namespace Tests.Unit.ViewModels
 	{
 		private class DerivedViewModelBase : ViewModelBase
 		{
+			public IMessenger ExposedMessenger => Messenger;
+
+			public DerivedViewModelBase() { }
 			public DerivedViewModelBase(IMessenger messenger) : base(messenger) { }
 		}
 
@@ -18,6 +21,14 @@ namespace Tests.Unit.ViewModels
 		public void GivenViewModel_WhenUnchanged_ThenIsActiveIsTrue()
 		{
 			Assert.True(SUT.IsActive);
+		}
+
+		[Fact]
+		public void GivenViewModel_WhenUnchanged_ThenUsesStrongReferenceMessenger()
+		{
+			var sut = new DerivedViewModelBase();
+
+			Assert.Equal(StrongReferenceMessenger.Default, sut.ExposedMessenger);
 		}
 
 		[Fact]

@@ -2,7 +2,7 @@ using System;
 using System.Windows.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
-using MP3Extender.WPF.Localization;
+using MP3Extender.MetroUI.Localization;
 using NSubstitute;
 using Xunit;
 

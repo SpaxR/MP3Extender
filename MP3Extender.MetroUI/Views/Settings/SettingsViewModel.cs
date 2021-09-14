@@ -4,6 +4,6 @@ namespace MP3Extender.MetroUI.Views.Settings
 {
 	public class SettingsViewModel : ViewModelBase
 	{
-		public string TestString { get; } = "SETTINGS TEST"; //Todo Delete This
+		public string TestString => "SETTINGS TEST"; //Todo Delete This
 	}
 }
