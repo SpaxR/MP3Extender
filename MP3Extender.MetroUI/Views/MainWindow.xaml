@@ -1,0 +1,28 @@
+﻿<mah:MetroWindow x:Class="MP3Extender.MetroUI.Views.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:local="clr-namespace:MP3Extender.MetroUI.Views"
+                 xmlns:editor="clr-namespace:MP3Extender.MetroUI.Views.Editor"
+                 xmlns:settings="clr-namespace:MP3Extender.MetroUI.Views.Settings"
+                 xmlns:about="clr-namespace:MP3Extender.MetroUI.Views.About"
+                 mc:Ignorable="d" d:DataContext="{d:DesignInstance local:MainViewModel}"
+                 Title="Mp3Extender" Height="450" Width="800">
+    <mah:MetroAnimatedTabControl TabStripPlacement="Left" TabStripMargin="10" Margin="5 10">
+        <mah:MetroTabItem Header="{icons:MaterialDesign InsertDriveFile, Width=24, Height=24}" Padding="0 20">
+            <editor:EditorView />
+        </mah:MetroTabItem>
+        <mah:MetroTabItem Header="{icons:MaterialDesign FormatListNumbered, Width=24, Height=24}" Padding="0 20">
+            Not available yet!
+        </mah:MetroTabItem>
+        <mah:MetroTabItem Header="{icons:MaterialDesign Settings, Width=24, Height=24}" Padding="0 20">
+            <settings:SettingsView />
+        </mah:MetroTabItem>
+        <mah:MetroTabItem Header="{icons:MaterialDesign Info, Width=24, Height=24}" Padding="0 20">
+            <about:AboutView />
+        </mah:MetroTabItem>
+    </mah:MetroAnimatedTabControl>
+</mah:MetroWindow>

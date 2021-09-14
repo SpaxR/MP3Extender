@@ -1,0 +1,36 @@
+<UserControl x:Class="MP3Extender.MetroUI.Views.Settings.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MP3Extender.MetroUI.Views.Settings"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance local:SettingsViewModel}"
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <Style TargetType="Separator">
+            <Style.Setters>
+                <Setter Property="Margin" Value="10" />
+            </Style.Setters>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel>
+
+        <mah:ToggleSwitch>Some Setting 1</mah:ToggleSwitch>
+
+        <Separator />
+
+        <TextBlock>Some Setting 2</TextBlock>
+        <mah:ToggleSwitch Content="Aktiviert" IsEnabled="True" />
+
+        <Separator />
+
+        <TextBlock>Some Setting 3</TextBlock>
+        <mah:ToggleSwitch>Nicht Aktiviert</mah:ToggleSwitch>
+
+        <Separator />
+
+    </StackPanel>
+</UserControl>
