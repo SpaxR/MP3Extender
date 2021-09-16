@@ -1,9 +1,15 @@
+using MP3Extender.Application;
 using MP3Extender.MetroUI.Common;
 
 namespace MP3Extender.MetroUI.Views.Editor
 {
 	public class EditorViewModel : ViewModelBase
 	{
-		public string TestString { get; set; } = "EDITOR TEST"; //Todo Delete This
+		public ISettings Settings    { get; }
+
+		public EditorViewModel(ISettings settings)
+		{
+			Settings    = settings;
+		}
 	}
 }

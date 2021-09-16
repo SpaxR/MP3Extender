@@ -13,9 +13,7 @@
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="{Binding TestString}" />
-        
-        <!-- <local:DirectoryTreeControl Grid.Column="0" /> -->
+        <local:DirectoryTreeControl Grid.Column="0" Root="{Binding Settings.RootFolder}" />
 
         <GridSplitter Grid.Column="1" ShowsPreview="False" />
 

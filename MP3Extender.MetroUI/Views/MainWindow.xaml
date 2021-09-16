@@ -11,7 +11,7 @@
                  xmlns:about="clr-namespace:MP3Extender.MetroUI.Views.About"
                  xmlns:i18N="clr-namespace:MP3Extender.MetroUI.Localization"
                  mc:Ignorable="d" d:DataContext="{d:DesignInstance local:MainViewModel}"
-                 Title="Mp3Extender" SizeToContent="WidthAndHeight">
+                 Title="Mp3Extender" Height="450" Width="800">
     <mah:MetroAnimatedTabControl TabStripPlacement="Left" TabStripMargin="10" Margin="5 10">
         <mah:MetroTabItem Header="{icons:MaterialDesign InsertDriveFile, Width=24, Height=24}" Padding="0 20">
             <editor:EditorView DataContext="{Binding EditorVM}" />
