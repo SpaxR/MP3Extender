@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MP3Extender.Application", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MP3Extender.MetroUI", "MP3Extender.MetroUI\MP3Extender.MetroUI.csproj", "{75FE043A-4DDB-4F4D-A0D9-336718941F5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MP3Extender.Domain", "MP3Extender.Domain\MP3Extender.Domain.csproj", "{CDA886CF-E8E0-4765-96D3-0A0361784B34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,5 +60,17 @@ Global
 		{75FE043A-4DDB-4F4D-A0D9-336718941F5B}.Release|x64.Build.0 = Release|Any CPU
 		{75FE043A-4DDB-4F4D-A0D9-336718941F5B}.Release|x86.ActiveCfg = Release|Any CPU
 		{75FE043A-4DDB-4F4D-A0D9-336718941F5B}.Release|x86.Build.0 = Release|Any CPU
+		{CDA886CF-E8E0-4765-96D3-0A0361784B34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDA886CF-E8E0-4765-96D3-0A0361784B34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDA886CF-E8E0-4765-96D3-0A0361784B34}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CDA886CF-E8E0-4765-96D3-0A0361784B34}.Debug|x64.Build.0 = Debug|Any CPU
+		{CDA886CF-E8E0-4765-96D3-0A0361784B34}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CDA886CF-E8E0-4765-96D3-0A0361784B34}.Debug|x86.Build.0 = Debug|Any CPU
+		{CDA886CF-E8E0-4765-96D3-0A0361784B34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDA886CF-E8E0-4765-96D3-0A0361784B34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDA886CF-E8E0-4765-96D3-0A0361784B34}.Release|x64.ActiveCfg = Release|Any CPU
+		{CDA886CF-E8E0-4765-96D3-0A0361784B34}.Release|x64.Build.0 = Release|Any CPU
+		{CDA886CF-E8E0-4765-96D3-0A0361784B34}.Release|x86.ActiveCfg = Release|Any CPU
+		{CDA886CF-E8E0-4765-96D3-0A0361784B34}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
