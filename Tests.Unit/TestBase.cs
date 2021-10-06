@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using MP3Extender.Application;
 using NSubstitute;
 
 namespace Tests.Unit
@@ -17,6 +18,7 @@ namespace Tests.Unit
 			}
 		}
 
+		protected readonly ISettings SettingsMock = Substitute.For<ISettings>();
 
 		protected readonly ILogger<T> LoggerMock = Substitute.For<ILogger<T>>();
 

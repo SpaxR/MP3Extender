@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:MP3Extender.MetroUI.Views.Editor"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             mc:Ignorable="d"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance local:FileEditorViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
@@ -22,7 +22,6 @@
                 </Style>
             </Menu.Resources>
 
-
             <MenuItem Header="{iconPacks:RemixIcon ListSettingsLine}">
                 <MenuItem Icon="{iconPacks:RemixIcon EyeFill}" Header="Column 1" />
                 <MenuItem Icon="{iconPacks:RemixIcon EyeFill}" Header="Column 2" />
@@ -33,32 +32,9 @@
             <MenuItem Header="{iconPacks:RemixIcon Save3Line}" />
         </Menu>
 
-
-        <DataGrid Grid.Row="1">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Column 1" Binding="{Binding Filename}" />
-                <DataGridTextColumn Header="Column 2" Binding="{Binding Title}" />
-                <DataGridTextColumn Header="Column 3" Binding="{Binding Interpret}" />
-                <DataGridTextColumn Header="Column 4" Binding="{Binding Custom}" />
-            </DataGrid.Columns>
-
-            <DataGrid.Items>
-                <local:DummyFile Filename="Datei 1.mp3"
-                                 Title="Some Title"
-                                 Interpret="Some Interpret"
-                                 Custom="Some other Thing" />
-
-                <local:DummyFile Filename="Datei 2.mp3"
-                                 Title="Some other Title"
-                                 Interpret="Some other Interpret"
-                                 Custom="Some Thing" />
-
-                <local:DummyFile Filename="Datei 3.mp3"
-                                 Title="Title Title"
-                                 Interpret="Interpret Interpret"
-                                 Custom="Thing Thing" />
-            </DataGrid.Items>
-
-        </DataGrid>
+        <local:DynamicDataGrid Grid.Row="1"
+                               Style="{DynamicResource MahApps.Styles.DataGrid}"
+                               DynamicColumns="{Binding EditorColumns}"
+                               ItemsSource="{Binding Files}" />
     </Grid>
 </UserControl>

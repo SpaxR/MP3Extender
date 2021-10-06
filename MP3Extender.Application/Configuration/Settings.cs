@@ -8,9 +8,12 @@ namespace MP3Extender.Application
 	{
 		public string[] AvailableThemes { get; }
 
-		public bool   UseDarkColors { get; set; }
-		public string ColorTheme    { get; set; }
-		public string RootFolder    { get; set; }
+		public bool   UseDarkColors      { get; set; }
+		public string ColorTheme         { get; set; }
+		public string RootFolder         { get; set; }
+		public bool   LoadRecursiveFiles { get; set; }
+
+		public string[] FileEditorColumns { get; set; }
 	}
 
 	[ExcludeFromCodeCoverage]
@@ -25,7 +28,6 @@ namespace MP3Extender.Application
 			set => this[nameof(UseDarkColors)] = value;
 		}
 
-
 		[UserScopedSetting, DefaultSettingValue("Blue")]
 		public string ColorTheme
 		{
@@ -33,11 +35,25 @@ namespace MP3Extender.Application
 			set => this[nameof(ColorTheme)] = value;
 		}
 
-		[UserScopedSetting]
+		[UserScopedSetting, DefaultSettingValue("C:\\")]
 		public string RootFolder
 		{
 			get => (string)this[nameof(RootFolder)];
 			set => this[nameof(RootFolder)] = value;
+		}
+
+		[UserScopedSetting, DefaultSettingValue("false")]
+		public bool LoadRecursiveFiles
+		{
+			get => (bool)this[nameof(LoadRecursiveFiles)];
+			set => this[nameof(LoadRecursiveFiles)] = value;
+		}
+
+		[UserScopedSetting]
+		public string[] FileEditorColumns
+		{
+			get => (string[])this[nameof(FileEditorColumns)];
+			set => this[nameof(FileEditorColumns)] = value;
 		}
 
 		// Auto-Save Changes

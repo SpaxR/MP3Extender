@@ -17,7 +17,7 @@
 
         <GridSplitter Grid.Column="1" ShowsPreview="False" />
 
-        <local:FileEditorControl Grid.Column="2" />
+        <local:FileEditorControl Grid.Column="2" DataContext="{Binding FilesViewModel}" />
 
     </Grid>
 </UserControl>

@@ -5,11 +5,14 @@ namespace MP3Extender.MetroUI.Views.Editor
 {
 	public class EditorViewModel : ViewModelBase
 	{
-		public ISettings Settings    { get; }
+		public ISettings Settings { get; }
 
-		public EditorViewModel(ISettings settings)
+		public FileEditorViewModel FilesViewModel { get; }
+
+		public EditorViewModel(ISettings settings, FileEditorViewModel filesViewModel)
 		{
-			Settings    = settings;
+			Settings         = settings;
+			FilesViewModel   = filesViewModel;
 		}
 	}
 }

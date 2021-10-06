@@ -28,7 +28,8 @@ namespace MP3Extender.Application.Services
 
 			return files.Select(file => new AudioFile()
 			{
-				Location = file
+				Location = file,
+				MetaData = new Dictionary<string, string>()
 				// 	MetaData = new Dictionary<string, string>
 				// 	{
 				// 		{ "Filename", "SOME FILE.mp3" },
@@ -42,11 +43,14 @@ namespace MP3Extender.Application.Services
 		/// <inheritdoc />
 		public IEnumerable<string> DetectColumns(IEnumerable<AudioFile> files)
 		{
-			var keys = files.Select(file => file.MetaData.Keys.AsEnumerable());
+			var keys = new List<string>();
 
-			var aggregated = keys.Aggregate((x, y) => x.Concat(y));
+			foreach (var file in files)
+			{
+				keys.AddRange(file.MetaData.Keys);
+			}
 
-			return aggregated.Distinct();
+			return keys.Distinct();
 		}
 	}
 }

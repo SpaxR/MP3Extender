@@ -36,6 +36,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\MP3Extender.Application\MP3Extender.Application.csproj" />
+	  <ProjectReference Include="..\MP3Extender.Domain\MP3Extender.Domain.csproj" />
 	</ItemGroup>
 
 </Project>
