@@ -1,10 +1,9 @@
-using System;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using MP3Extender.MetroUI.Views.Editor;
 using Xunit;
 
-namespace Tests.Unit.Views
+namespace Tests.Unit.Controls
 {
 	public class DynamicDataGridTests : TestBase<DynamicDataGrid>
 	{
@@ -12,14 +11,18 @@ namespace Tests.Unit.Views
 
 		public DynamicDataGridTests()
 		{
+			// Force initialization
 			_ = SUT;
 		}
-		
+
 		/// <inheritdoc />
-		protected override DynamicDataGrid CreateSUT() => new()
+		protected override DynamicDataGrid CreateSUT()
 		{
-			DynamicColumns = _columns
-		};
+			return new DynamicDataGrid
+			{
+				DynamicColumns = _columns
+			};
+		}
 
 		[UIFact]
 		public void GivenColumns_WhenColumnAdded_ThenColumnsContainsNewColumn()

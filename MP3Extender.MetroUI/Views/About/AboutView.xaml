@@ -7,6 +7,5 @@
              mc:Ignorable="d" d:DataContext="{d:DesignInstance local:AboutViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <TextBlock Text="{Binding TestString}" />
     </Grid>
 </UserControl>

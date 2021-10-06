@@ -7,11 +7,8 @@ using Xunit;
 
 namespace Tests.Unit.Extensions
 {
-	public class StartupExtensionsTests : TestBase<IServiceCollection>
+	public class StartupExtensionsTests : TestBaseDefault<ServiceCollection>
 	{
-		/// <inheritdoc />
-		protected override IServiceCollection CreateSUT() => new ServiceCollection();
-
 		[Fact]
 		public void AddViewModels_AddsAllClassesNamedViewModelToCollection()
 		{

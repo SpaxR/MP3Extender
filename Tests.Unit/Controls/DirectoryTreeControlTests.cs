@@ -9,14 +9,11 @@ using MP3Extender.MetroUI.Views.Editor;
 using NSubstitute;
 using Xunit;
 
-namespace Tests.Unit.Views
+namespace Tests.Unit.Controls
 {
-	public sealed class DirectoryTreeControlTests : TestBase<DirectoryTreeControl>, IDisposable
+	public sealed class DirectoryTreeControlTests : TestBaseDefault<DirectoryTreeControl>, IDisposable
 	{
 		private readonly IList<string> _createdFolders = new List<string>();
-
-		/// <inheritdoc />
-		protected override DirectoryTreeControl CreateSUT() => new();
 
 		public DirectoryTreeControlTests()
 		{

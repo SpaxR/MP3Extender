@@ -1,11 +1,10 @@
-﻿namespace MP3Extender.MetroUI.Views
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace MP3Extender.MetroUI.Views
 {
-	/// <summary>Interaction logic for MainWindow.xaml</summary>
+	[ExcludeFromCodeCoverage(Justification = "UI-Class")]
 	public partial class MainWindow
 	{
-		public MainWindow()
-		{
-			InitializeComponent();
-		}
+		public MainWindow() => InitializeComponent();
 	}
 }

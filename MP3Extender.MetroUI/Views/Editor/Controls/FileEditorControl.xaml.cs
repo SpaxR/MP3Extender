@@ -1,12 +1,10 @@
-using System.Windows.Controls;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MP3Extender.MetroUI.Views.Editor
 {
-	public partial class FileEditorControl : UserControl
+	[ExcludeFromCodeCoverage(Justification = "UI-Class")]
+	public partial class FileEditorControl
 	{
-		public FileEditorControl()
-		{
-			InitializeComponent();
-		}
+		public FileEditorControl() => InitializeComponent();
 	}
 }

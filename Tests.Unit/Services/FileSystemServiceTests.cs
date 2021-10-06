@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Tests.Unit.Services
 {
-	public sealed class FileSystemServiceTests : TestBase<FileSystemService>, IDisposable
+	public sealed class FileSystemServiceTests : TestBaseDefault<FileSystemService>, IDisposable
 	{
 		private readonly string _tempFolder;
 
@@ -23,9 +23,6 @@ namespace Tests.Unit.Services
 		{
 			Directory.Delete(_tempFolder, true);
 		}
-
-		/// <inheritdoc />
-		protected override FileSystemService CreateSUT() => new();
 
 		private string CreateTempFile(string subDirectory = null)
 		{

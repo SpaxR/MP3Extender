@@ -1,12 +1,10 @@
-using System.Windows.Controls;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MP3Extender.MetroUI.Views.About
 {
-	public partial class AboutView : UserControl
+	[ExcludeFromCodeCoverage(Justification = "UI-Class")]
+	public partial class AboutView
 	{
-		public AboutView()
-		{
-			InitializeComponent();
-		}
+		public AboutView() => InitializeComponent();
 	}
 }

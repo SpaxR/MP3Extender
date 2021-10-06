@@ -10,7 +10,7 @@ namespace Tests.Unit.Localization
 {
 	public class PhraseExtensionTests : TestBase<PhraseExtension>
 	{
-		private string _key;
+		private readonly string _key = string.Empty;
 
 		private static readonly ILocalizationProvider LocalizationMock = Substitute.For<ILocalizationProvider>();
 
@@ -56,7 +56,7 @@ namespace Tests.Unit.Localization
 
 			Assert.Equal(expectation, sut.ConverterParameter);
 		}
-		
+
 		[Fact]
 		public void GivenValidData_WhenParameterIsArray_ThenReturnsFormattedString()
 		{
