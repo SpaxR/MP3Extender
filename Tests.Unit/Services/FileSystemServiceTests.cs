@@ -1,22 +1,29 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using LibVLCSharp.Shared;
 using MP3Extender.Application.Services;
 using MP3Extender.Domain.Entities;
+using NSubstitute;
 using Xunit;
 
 namespace Tests.Unit.Services
 {
-	public sealed class FileSystemServiceTests : TestBaseDefault<FileSystemService>, IDisposable
+	public sealed class FileSystemServiceTests : TestBase<FileSystemService>, IClassFixture<VlcTestFixture>, IDisposable
 	{
-		private readonly string _tempFolder;
+		private readonly VlcTestFixture _vlcFixture;
+		private readonly string         _tempFolder;
+		private readonly IMetaDataStore _metaDataStoreMock = Substitute.For<IMetaDataStore>();
 
-		public FileSystemServiceTests()
+		public FileSystemServiceTests(VlcTestFixture vlcFixture)
 		{
+			_vlcFixture = vlcFixture;
 			_tempFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 			Directory.CreateDirectory(_tempFolder);
 		}
+
+		/// <inheritdoc />
+		protected override FileSystemService CreateSUT() => new(_vlcFixture.VLC, _metaDataStoreMock);
 
 		/// <inheritdoc />
 		public void Dispose()
@@ -24,61 +31,71 @@ namespace Tests.Unit.Services
 			Directory.Delete(_tempFolder, true);
 		}
 
-		private string CreateTempFile(string subDirectory = null)
+		private string CreateTempFile(string subDirectory = null, bool useRealFile = true)
 		{
-			string file = Path.GetRandomFileName();
+			string path = Path.Combine(_tempFolder, subDirectory ?? string.Empty, Path.GetRandomFileName());
 
 			if (!string.IsNullOrEmpty(subDirectory))
 			{
 				Directory.CreateDirectory(Path.Combine(_tempFolder, subDirectory));
 			}
 
-			File.Create(Path.Combine(_tempFolder, subDirectory ?? string.Empty, file))
-				.Close();
+			if (useRealFile)
+			{
+				File.Copy(VlcTestFixture.SampleFilename, path);
+			}
+			else
+			{
+				File.Create(path).Close();
+			}
 
-			return file;
+
+			return Path.GetFileName(path);
 		}
 
 		[Fact]
-		public void GivenValidPath_WhenOnlyFiles_ThenReturnsAllFiles()
+		public void LoadFiles_WithUnsupportedFiles_ReturnsOnlySupportedFiles()
 		{
-			string expectation = CreateTempFile();
+			string[] expected = { CreateTempFile() };
+			CreateTempFile(useRealFile: false);
 
 			var result = SUT.LoadFiles(_tempFolder, false);
 
-			Assert.Contains(result, file => expectation.Equals(Path.GetFileName(file.Location)));
+			Assert.Equal(expected.OrderBy(_ => _),
+						 result.Select(file => Path.GetFileName(file.Location)).OrderBy(_ => _));
 		}
 
 		[Fact]
-		public void GivenValidPath_WhenSubDirectoriesTrue_ThenReturnsFilesInSubDirs()
+		public void LoadFiles_WithoutSubDirectories_ReturnsOnlyTopLevelFiles()
 		{
-			string expectation = CreateTempFile("SubDirectory");
-
-			var result = SUT.LoadFiles(_tempFolder, true);
-
-			Assert.Contains(result, file => expectation.Equals(Path.GetFileName(file.Location)));
-		}
-
-		[Fact]
-		public void GivenValidPath_WhenSubDirectoriesFalse_ThenDoesNotContainFilesInSubDirs()
-		{
+			string[] expectation = { CreateTempFile() };
 			CreateTempFile("SubDirectory");
 
 			var result = SUT.LoadFiles(_tempFolder, false);
 
-			Assert.Empty(result);
+			Assert.Equal(expectation, result.Select(file => Path.GetFileName(file.Location)).ToArray());
 		}
 
 		[Fact]
-		public void GivenValidPath_WhenNoFilesExist_ThenYieldNoResults()
+		public void LoadFiles_WithSubDirectories_ReturnsAllFiles()
+		{
+			string[] expectation = { CreateTempFile(), CreateTempFile("SubDirectory") };
+
+			var result = SUT.LoadFiles(_tempFolder, true);
+
+			Assert.Equal(expectation, result.Select(file => Path.GetFileName(file.Location)));
+		}
+
+		[Fact]
+		public void LoadFiles_WithoutFiles_YieldsNoResults()
 		{
 			var result = SUT.LoadFiles(_tempFolder, false);
 
 			Assert.Empty(result);
 		}
-		
+
 		[Fact]
-		public void GivenInvalidPath_WhenLoading_ThenYieldNoResults()
+		public void LoadFiles_WithInvalidPath_YieldsNoResults()
 		{
 			string invalidPath = Path.GetRandomFileName();
 
@@ -88,37 +105,36 @@ namespace Tests.Unit.Services
 		}
 
 		[Fact]
-		public void GivenAudioFiles_WhenDetectingColumns_ThenReturnsDistinctColumns()
+		public void LoadFiles_ResultContainsMetaData()
 		{
-			var files = new[]
-			{
-				new AudioFile
-				{
-					MetaData = new Dictionary<string, string>
-					{
-						{ "A", "1" },
-						{ "C", "3" }
-					}
-				},
-				new AudioFile()
-				{
-					MetaData = new Dictionary<string, string>
-					{
-						{ "A", "1" },
-						{ "B", "2" }
-					}
-				},
-				new AudioFile()
-				{
-					MetaData = new Dictionary<string, string>
-					{
-						{ "A", "1" },
-					}
-				}
-			};
-			var result = SUT.DetectColumns(files);
+			const string expectedTitle     = "SOME TITLE";
+			const string expectedInterpret = "SOME INTERPRET";
+			string       file              = CreateTempFile();
 
-			Assert.Equal(new[] { "A", "B", "C" }.OrderBy(_ => _), result.OrderBy(_ => _));
+			using (var media = new Media(_vlcFixture.VLC, file))
+			{
+				media.SetMeta(MetadataType.Title,  expectedTitle);
+				media.SetMeta(MetadataType.Artist, expectedInterpret);
+				Assert.True(media.SaveMeta());
+			}
+
+			var result = SUT.LoadFiles(_tempFolder, false).Single();
+
+			Assert.Equal(expectedInterpret, result.Interpret);
+			Assert.Equal(expectedTitle,     result.Title);
+		}
+
+		[Fact]
+		public void SaveFile_SavesCustomMetaDataInStore()
+		{
+			var file = new AudioFile
+			{
+				Data = new MetaData()
+			};
+
+			SUT.SaveFile(file);
+
+			_metaDataStoreMock.Received(1).SaveMetaData(file.Data);
 		}
 	}
 }

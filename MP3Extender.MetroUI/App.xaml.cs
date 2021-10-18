@@ -1,5 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
+using LibVLCSharp.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
@@ -15,14 +17,18 @@ namespace MP3Extender.MetroUI
 	{
 		public App()
 		{
+			Core.Initialize(); // Initialize VLC
+
 			var services = new ServiceCollection();
 
 			services
 				.AddViewModels()
 				.AddLocalization()
+				.AddSingleton<LibVLC>() // Needs to be Singleton
 				.AddSingleton<IMessenger>(StrongReferenceMessenger.Default)
 				.AddSingleton<ISettings, Settings>()
-				.AddSingleton<IFileSystemService, FileSystemService>();
+				.AddSingleton<IFileSystemService, FileSystemService>()
+				.AddSingleton<IMetaDataStore, MetaDataStore>();
 
 			Ioc.Default.ConfigureServices(services.BuildServiceProvider());
 		}

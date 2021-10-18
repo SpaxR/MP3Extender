@@ -9,6 +9,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
 		<PackageReference Include="NSubstitute" Version="4.2.2" />
+		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.16" />
 		<PackageReference Include="xunit" Version="2.4.1" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -28,6 +29,9 @@
 
 	<ItemGroup>
 	  <None Remove="Tests.Unit.csproj.DotSettings" />
+	  <None Update="sample.mp3">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>

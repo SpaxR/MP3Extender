@@ -13,11 +13,13 @@
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
 
-        <local:DirectoryTreeControl Grid.Column="0" Root="{Binding Settings.RootFolder}" />
+        <local:DirectoryTreeControl Grid.Column="0"
+                                    Root="{Binding Settings.RootFolder}"
+                                    SelectedCommand="{Binding FileEditorVM.ReloadFiles}" />
 
-        <GridSplitter Grid.Column="1" ShowsPreview="False" />
+        <GridSplitter Grid.Column="1" ShowsPreview="False" Background="Transparent" />
 
-        <local:FileEditorControl Grid.Column="2" DataContext="{Binding FilesViewModel}" />
+        <local:FileEditorControl Grid.Column="2" DataContext="{Binding FileEditorVM}" />
 
     </Grid>
 </UserControl>
