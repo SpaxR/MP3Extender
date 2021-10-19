@@ -28,7 +28,7 @@ namespace Tests.Unit
 		protected abstract T CreateSUT();
 	}
 
-	public abstract class TestBaseDefault<T> : TestBase<T> where T : new()
+	public abstract class DefaultTestBase<T> : TestBase<T> where T : new()
 	{
 		/// <inheritdoc />
 		protected override T CreateSUT() => new();

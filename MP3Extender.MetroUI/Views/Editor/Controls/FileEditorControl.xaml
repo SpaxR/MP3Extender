@@ -12,8 +12,12 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
 
-        <Menu HorizontalAlignment="Right">
+        <Menu Grid.ColumnSpan="2" HorizontalAlignment="Right">
             <Menu.Resources>
                 <Style TargetType="iconPacks:PackIconRemixIcon">
                     <Setter Property="Width" Value="20" />
@@ -22,19 +26,23 @@
                 </Style>
             </Menu.Resources>
 
-            <MenuItem Header="{iconPacks:RemixIcon ListSettingsLine}">
-                <MenuItem Icon="{iconPacks:RemixIcon EyeFill}" Header="Column 1" />
-                <MenuItem Icon="{iconPacks:RemixIcon EyeFill}" Header="Column 2" />
-                <MenuItem Icon="{iconPacks:RemixIcon EyeFill}" Header="Column 3" />
-                <MenuItem Icon="{iconPacks:RemixIcon InsertColumnRight}" Header="Add Column" />
-            </MenuItem>
-
             <MenuItem Header="{iconPacks:RemixIcon Save3Line}" />
         </Menu>
 
-        <local:DynamicDataGrid Grid.Row="1"
-                               Style="{DynamicResource MahApps.Styles.DataGrid}"
-                               DynamicColumns="{Binding EditorColumns}"
-                               ItemsSource="{Binding Files}" />
+        <DataGrid Grid.Column="0" Grid.Row="1" AutoGenerateColumns="False"
+                  Style="{DynamicResource MahApps.Styles.DataGrid}"
+                  ItemsSource="{Binding Files}"
+                  SelectedItem="{Binding SelectedFile}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Location" Binding="{Binding Location}" />
+                <DataGridTextColumn Header="Interpret" Binding="{Binding Interpret}" />
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Placeholder for MetaData-Editor -->
+        <Grid Background="Gray" Grid.Row="1" Grid.Column="1" Width="200px">
+            <TextBlock Text="{Binding SelectedFile.Data}" />
+        </Grid>
     </Grid>
 </UserControl>

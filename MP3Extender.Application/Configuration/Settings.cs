@@ -14,6 +14,8 @@ namespace MP3Extender.Application
 		public bool   LoadRecursiveFiles { get; set; }
 
 		public string[] FileEditorColumns { get; set; }
+
+		public string MetaDataStorePath { get; set; }
 	}
 
 	[ExcludeFromCodeCoverage]
@@ -54,6 +56,13 @@ namespace MP3Extender.Application
 		{
 			get => (string[])this[nameof(FileEditorColumns)];
 			set => this[nameof(FileEditorColumns)] = value;
+		}
+
+		[ApplicationScopedSetting, DefaultSettingValue("data.json")]
+		public string MetaDataStorePath
+		{
+			get => (string)this[nameof(MetaDataStorePath)];
+			set => this[nameof(MetaDataStorePath)] = value;
 		}
 
 		// Auto-Save Changes

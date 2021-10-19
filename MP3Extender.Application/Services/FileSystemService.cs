@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using LibVLCSharp.Shared;
 using MP3Extender.Domain.Entities;
 
 namespace MP3Extender.Application.Services
@@ -9,48 +11,60 @@ namespace MP3Extender.Application.Services
 	{
 		public IEnumerable<AudioFile> LoadFiles(string path, bool loadSubFolders);
 
-		public IEnumerable<string> DetectColumns(IEnumerable<AudioFile> files);
+		public void SaveFile(AudioFile file);
 	}
-
 
 	public class FileSystemService : IFileSystemService
 	{
+		private readonly LibVLC         _vlc;
+		private readonly IMetaDataStore _store;
+
+		public FileSystemService(LibVLC vlc, IMetaDataStore store)
+		{
+			_vlc   = vlc;
+			_store = store;
+		}
+
+
 		/// <inheritdoc />
 		public IEnumerable<AudioFile> LoadFiles(string path, bool loadSubFolders)
 		{
-			if (!Directory.Exists(path))
+			if (!Directory.Exists(path)) yield break;
+
+			var files = Directory.EnumerateFiles(path,
+												 string.Empty,
+												 loadSubFolders
+													 ? SearchOption.AllDirectories
+													 : SearchOption.TopDirectoryOnly);
+
+			foreach (string file in files)
 			{
-				return Enumerable.Empty<AudioFile>();
+				using var media = new Media(_vlc, file);
+
+				if (media.Parse().Result == MediaParsedStatus.Done)
+				{
+					yield return new AudioFile
+					{
+						Location  = file,
+						Interpret = media.Meta(MetadataType.Artist),
+						Title     = media.Meta(MetadataType.Title),
+						Data      = _store.LoadMetaData(Encoding.UTF8.GetString(MD5.HashData(File.ReadAllBytes(file))))
+					};
+				}
 			}
-
-			var files = Directory.EnumerateFiles(
-				path, string.Empty, loadSubFolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
-
-			return files.Select(file => new AudioFile()
-			{
-				Location = file,
-				MetaData = new Dictionary<string, string>()
-				// 	MetaData = new Dictionary<string, string>
-				// 	{
-				// 		{ "Filename", "SOME FILE.mp3" },
-				// 		{ "Title", "SOME TITLE" },
-				// 		{ "Interpret", "SOME INTERPRET" },
-				// 		{ "SomeColumn", "SOME COLUMN" }
-				// 	}
-			});
 		}
 
 		/// <inheritdoc />
-		public IEnumerable<string> DetectColumns(IEnumerable<AudioFile> files)
+		public void SaveFile(AudioFile file)
 		{
-			var keys = new List<string>();
-
-			foreach (var file in files)
+			using (var media = new Media(_vlc, file.Location))
 			{
-				keys.AddRange(file.MetaData.Keys);
+				media.SetMeta(MetadataType.Artist, file.Interpret);
+				media.SetMeta(MetadataType.Title,  file.Title);
+				media.SaveMeta();
 			}
 
-			return keys.Distinct();
+			_store.SaveMetaData(file.Data);
 		}
 	}
 }
