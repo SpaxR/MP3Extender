@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
+using System.Text;
 using LibVLCSharp.Shared;
 using MP3Extender.Domain.Entities;
 
@@ -36,38 +35,36 @@ namespace MP3Extender.Application.Services
 												 string.Empty,
 												 loadSubFolders
 													 ? SearchOption.AllDirectories
-													 : SearchOption.TopDirectoryOnly)
-								 .Where(file => IsFileReadable(file).Result);
+													 : SearchOption.TopDirectoryOnly);
 
 			foreach (string file in files)
 			{
 				using var media = new Media(_vlc, file);
 
-				yield return new AudioFile
+				if (media.Parse().Result == MediaParsedStatus.Done)
 				{
-					Location  = file,
-					Interpret = media.Meta(MetadataType.Artist),
-					Title     = media.Meta(MetadataType.Title),
-					Data      = _store.LoadMetaData(MD5.HashData(File.ReadAllBytes(file)))
-				};
+					yield return new AudioFile
+					{
+						Location  = file,
+						Interpret = media.Meta(MetadataType.Artist),
+						Title     = media.Meta(MetadataType.Title),
+						Data      = _store.LoadMetaData(Encoding.UTF8.GetString(MD5.HashData(File.ReadAllBytes(file))))
+					};
+				}
 			}
 		}
 
 		/// <inheritdoc />
 		public void SaveFile(AudioFile file)
 		{
+			using (var media = new Media(_vlc, file.Location))
+			{
+				media.SetMeta(MetadataType.Artist, file.Interpret);
+				media.SetMeta(MetadataType.Title,  file.Title);
+				media.SaveMeta();
+			}
+
 			_store.SaveMetaData(file.Data);
-		}
-
-		private async Task<bool> IsFileReadable(string path)
-		{
-			using var media = new Media(_vlc, path);
-
-			if (media.Type != MediaType.File) return false;
-
-			var status = await media.Parse();
-
-			return status == MediaParsedStatus.Done;
 		}
 	}
 }

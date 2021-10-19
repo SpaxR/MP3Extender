@@ -4,7 +4,7 @@ namespace MP3Extender.Domain.Entities
 {
 	public class MetaData
 	{
-		public byte[]                        Hash { get; set; }
+		public string                        Hash { get; set; }
 		public IDictionary<string, string[]> Data { get; set; }
 	}
 }

@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Tests.Unit.ViewModels
 {
-	public class AboutViewModelTests : TestBaseDefault<AboutViewModel>
+	public class AboutViewModelTests : DefaultTestBase<AboutViewModel>
 	{
 		[Fact]
 		public void Sanity()

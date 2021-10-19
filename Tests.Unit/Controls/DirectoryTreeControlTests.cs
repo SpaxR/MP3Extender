@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Tests.Unit.Controls
 {
-	public sealed class DirectoryTreeControlTests : TestBaseDefault<DirectoryTreeControl>, IDisposable
+	public sealed class DirectoryTreeControlTests : DefaultTestBase<DirectoryTreeControl>, IDisposable
 	{
 		private readonly IList<string> _createdFolders = new List<string>();
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using LibVLCSharp.Shared;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +23,7 @@ namespace MP3Extender.MetroUI
 			services
 				.AddViewModels()
 				.AddLocalization()
-				.AddSingleton<LibVLC>() // Needs to be Singleton
+				.AddSingleton(new LibVLC()) // Note: DI cannot instantiate LibVLC (Not a Default-Constructor)
 				.AddSingleton<IMessenger>(StrongReferenceMessenger.Default)
 				.AddSingleton<ISettings, Settings>()
 				.AddSingleton<IFileSystemService, FileSystemService>()

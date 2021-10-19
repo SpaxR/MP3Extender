@@ -23,15 +23,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\MP3Extender.Application\MP3Extender.Application.csproj" />
-	  <ProjectReference Include="..\MP3Extender.MetroUI\MP3Extender.MetroUI.csproj" />
+		<ProjectReference Include="..\MP3Extender.Application\MP3Extender.Application.csproj" />
+		<ProjectReference Include="..\MP3Extender.MetroUI\MP3Extender.MetroUI.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Tests.Unit.csproj.DotSettings" />
-	  <None Update="sample.mp3">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
+		<None Remove="Tests.Unit.csproj.DotSettings" />
+		<None Update="sample.mp3">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 </Project>

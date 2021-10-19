@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using LibVLCSharp.Shared;
 using MP3Extender.Application.Services;
 using MP3Extender.Domain.Entities;
@@ -31,9 +32,11 @@ namespace Tests.Unit.Services
 			Directory.Delete(_tempFolder, true);
 		}
 
-		private string CreateTempFile(string subDirectory = null, bool useRealFile = true)
+		private string CreateTempFile(string subDirectory = null, string extension = "mp3", bool useRealFile = true)
 		{
-			string path = Path.Combine(_tempFolder, subDirectory ?? string.Empty, Path.GetRandomFileName());
+			string path = Path.Combine(_tempFolder,
+									   subDirectory ?? string.Empty,
+									   Path.GetRandomFileName() + "." + extension);
 
 			if (!string.IsNullOrEmpty(subDirectory))
 			{
@@ -111,11 +114,11 @@ namespace Tests.Unit.Services
 			const string expectedInterpret = "SOME INTERPRET";
 			string       file              = CreateTempFile();
 
-			using (var media = new Media(_vlcFixture.VLC, file))
+			using (var media = new Media(_vlcFixture.VLC, Path.Combine(_tempFolder, file)))
 			{
 				media.SetMeta(MetadataType.Title,  expectedTitle);
 				media.SetMeta(MetadataType.Artist, expectedInterpret);
-				Assert.True(media.SaveMeta());
+				media.SaveMeta();
 			}
 
 			var result = SUT.LoadFiles(_tempFolder, false).Single();
@@ -129,12 +132,37 @@ namespace Tests.Unit.Services
 		{
 			var file = new AudioFile
 			{
-				Data = new MetaData()
+				Location  = Path.Combine(_tempFolder, CreateTempFile()),
+				Interpret = "SOME INTERPRET",
+				Title     = "SOME TITLE",
+				Data      = new MetaData()
 			};
 
 			SUT.SaveFile(file);
 
 			_metaDataStoreMock.Received(1).SaveMetaData(file.Data);
+		}
+
+		[Fact]
+		public async Task SaveFile_WritesMetaDataToFile()
+		{
+			const string expectedTitle     = "SOME TITLE";
+			const string expectedInterpret = "SOME INTERPRET";
+			string       file              = CreateTempFile();
+
+			var expected = new AudioFile
+			{
+				Location  = Path.Combine(_tempFolder, file),
+				Title     = expectedTitle,
+				Interpret = expectedInterpret,
+			};
+
+			SUT.SaveFile(expected);
+
+			using var media = new Media(_vlcFixture.VLC, Path.Combine(_tempFolder, file));
+			await media.Parse();
+			Assert.Equal(expectedInterpret, media.Meta(MetadataType.Artist));
+			Assert.Equal(expectedTitle,     media.Meta(MetadataType.Title));
 		}
 	}
 }

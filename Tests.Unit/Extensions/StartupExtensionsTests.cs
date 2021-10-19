@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Tests.Unit.Extensions
 {
-	public class StartupExtensionsTests : TestBaseDefault<ServiceCollection>
+	public class StartupExtensionsTests : DefaultTestBase<ServiceCollection>
 	{
 		[Fact]
 		public void AddViewModels_AddsAllClassesNamedViewModelToCollection()

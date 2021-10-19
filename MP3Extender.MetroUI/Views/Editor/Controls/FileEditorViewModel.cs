@@ -9,7 +9,7 @@ namespace MP3Extender.MetroUI.Views.Editor
 {
 	public class FileEditorViewModel : ViewModelBase
 	{
-		public AudioFile SelectedFile { get; set; }
+		// public AudioFile SelectedFile { get; set; }
 
 		public IEnumerable<AudioFile> Files       { get; private set; }
 		public IRelayCommand<string>  ReloadFiles { get; }
