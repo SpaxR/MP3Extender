@@ -9,10 +9,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MahApps.Metro" Version="2.4.7" />
-		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
+		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
+		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
-		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2" />
+		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.0" />
 		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.16" />
 	</ItemGroup>
 
