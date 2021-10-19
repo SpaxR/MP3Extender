@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using LibVLCSharp.Shared;
 using MP3Extender.Application.Services;
@@ -66,6 +68,24 @@ namespace Tests.Unit.Services
 
 			Assert.Equal(expected.OrderBy(_ => _),
 						 result.Select(file => Path.GetFileName(file.Location)).OrderBy(_ => _));
+		}
+
+		[Fact]
+		public void LoadFiles_DoesNotReturnInaccessibleFiles()
+		{
+			// Lock File
+			var stream = File.Open(Path.Combine(_tempFolder, CreateTempFile()),
+								   FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+
+			try
+			{
+				Assert.Empty(SUT.LoadFiles(_tempFolder, false));
+			}
+			finally
+			{
+				// Release Lock
+				stream.Close();
+			}
 		}
 
 		[Fact]

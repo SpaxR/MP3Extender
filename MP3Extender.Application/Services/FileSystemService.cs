@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
@@ -39,8 +40,25 @@ namespace MP3Extender.Application.Services
 
 			foreach (string file in files)
 			{
-				using var media = new Media(_vlc, file);
+				// TODO Clean up this mess
+				string hash = null;
 
+				try
+				{
+					hash = Encoding.UTF8.GetString(MD5.HashData(File.ReadAllBytes(file)));
+				}
+				catch (Exception e)
+				{
+					/* Failed to read File */
+				}
+
+				if (hash == null)
+				{
+					/* Failed to read File */
+					continue;
+				}
+
+				using var media = new Media(_vlc, file);
 				if (media.Parse().Result == MediaParsedStatus.Done)
 				{
 					yield return new AudioFile
@@ -48,7 +66,7 @@ namespace MP3Extender.Application.Services
 						Location  = file,
 						Interpret = media.Meta(MetadataType.Artist),
 						Title     = media.Meta(MetadataType.Title),
-						Data      = _store.LoadMetaData(Encoding.UTF8.GetString(MD5.HashData(File.ReadAllBytes(file))))
+						Data      = _store.LoadMetaData(hash)
 					};
 				}
 			}
