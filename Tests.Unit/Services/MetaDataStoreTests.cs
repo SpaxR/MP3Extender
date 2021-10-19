@@ -45,17 +45,32 @@ namespace Tests.Unit.Services
 		[Fact]
 		public void SaveMetaData_WithExistingData_AddsNewData()
 		{
-			var store = new List<MetaData> { new() { Hash = "HASH1" } };
-			var data  = new MetaData { Hash = "HASH2" };
-			File.WriteAllText(_store, JsonSerializer.Serialize(store));
+			File.WriteAllText(_store, JsonSerializer.Serialize(new List<MetaData> { new() { Hash = "HASH1" } }));
 
-			SUT.SaveMetaData(data);
+			SUT.SaveMetaData(new MetaData { Hash = "HASH2" });
 
-			store = JsonSerializer.Deserialize<List<MetaData>>(File.ReadAllText(_store));
+			var store = JsonSerializer.Deserialize<List<MetaData>>(File.ReadAllText(_store));
 			Assert.NotNull(store);
 			Assert.Equal(2, store.Count);
 			Assert.Contains(store, entry => entry.Hash.Equals("HASH1"));
+			Assert.Contains(store, entry => entry.Hash.Equals("HASH2"));
 		}
+
+		[Fact]
+		public void SaveMetaData_WithExistingData_UpdatesExistingData()
+		{
+			var expectation = new Dictionary<string, string[]>();
+			File.WriteAllText(_store, JsonSerializer.Serialize(new List<MetaData> { new() { Hash = "HASH1" } }));
+
+			SUT.SaveMetaData(new MetaData { Hash = "HASH1", Data = expectation });
+
+			var store = JsonSerializer.Deserialize<List<MetaData>>(File.ReadAllText(_store));
+			Assert.NotNull(store);
+			
+			var result = Assert.Single(store);
+			Assert.Equal(expectation, result.Data);
+		}
+
 
 		[Fact]
 		public void LoadMetaData_WithoutExistingData_ReturnsNewInstance()
